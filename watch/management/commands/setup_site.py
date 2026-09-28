@@ -7,13 +7,13 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from djangocms_versioning.models import Version
 
-from watch.site_content import HOME, LEGAL, WATCH
+from watch.site_content import ABOUT, HOME, LEGAL, WATCH
 
 
 class Command(BaseCommand):
     help = (
         "Crée et publie les pages Accueil et Observatoire (FR et EN) d'un site vide, "
-        "puis la page Mentions légales si elle manque."
+        "puis les pages À propos et Mentions légales si elles manquent."
     )
 
     def add_arguments(self, parser):
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 self.create_watch_page(author)
                 created += ["Accueil", "Observatoire"]
             # Pages ajoutées après la première version du site : créées aussi sur un site existant.
-            for reverse_id, copy, in_navigation in (("legal-notice", LEGAL, False),):
+            for reverse_id, copy, in_navigation in (("about", ABOUT, True), ("legal-notice", LEGAL, False)):
                 if not Page.objects.filter(reverse_id=reverse_id).exists():
                     self.create_text_page(author, reverse_id, copy, in_navigation)
                     created.append(copy["fr"]["title"])

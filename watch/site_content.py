@@ -32,6 +32,64 @@ HOME = {
 
 WATCH = {"fr": ("Observatoire", "observatoire"), "en": ("Observatory", "observatory")}
 
+ABOUT = {
+    "fr": {
+        "title": "À propos",
+        "slug": "a-propos",
+        "body": f"""<h1>À propos</h1>
+<p>L'Observatoire des CMS rassemble en un seul endroit les nouvelles versions et les avis de sécurité
+des principaux CMS open source : {CMS_LIST['fr']}.</p>
+<h2>À quoi sert-il ?</h2>
+<p>Maintenir un site, c'est surveiller en permanence les mises à jour de son CMS et savoir lesquelles
+corrigent une faille. Ces informations sont dispersées entre registres de paquets, dépôts de code et
+bases de vulnérabilités. L'observatoire les collecte pour vous et répond à trois questions :</p>
+<ul>
+<li>quelle est la dernière version stable de chaque CMS ?</li>
+<li>quelles versions corrigent une faille de sécurité, et de quelle gravité ?</li>
+<li>quel CMS a connu le plus d'alertes ces douze derniers mois ?</li>
+</ul>
+<p>Il s'adresse aux agences, aux développeurs freelances, aux équipes techniques et à toute personne
+qui doit choisir un CMS ou garder ses sites à jour.</p>
+<h2>D'où viennent les données ?</h2>
+<p>Les versions proviennent des registres officiels (PyPI, Packagist) ou des publications GitHub des
+projets. Les avis de sécurité proviennent de la base ouverte <a href="https://osv.dev/">OSV.dev</a>.
+La collecte est automatique et a lieu plusieurs fois par jour. Chaque avis renvoie vers sa source.</p>
+<h2>Limites</h2>
+<p>L'observatoire ne remplace pas les annonces de sécurité officielles de chaque projet : un avis peut
+y paraître avec quelques heures de décalage, et certains éditeurs publient peu dans OSV. Les résumés
+sont générés automatiquement et peuvent être imprécis : vérifiez toujours l'avis d'origine avant
+d'agir.</p>
+<p>Un flux RSS des avis de sécurité est disponible en pied de page.</p>""",
+    },
+    "en": {
+        "title": "About",
+        "slug": "about",
+        "body": f"""<h1>About</h1>
+<p>The Observatoire des CMS (CMS Observatory) brings together, in one place, the new releases and security advisories of the
+main open source CMSs: {CMS_LIST['en']}.</p>
+<h2>What is it for?</h2>
+<p>Maintaining a website means constantly watching your CMS for updates and knowing which ones fix a
+vulnerability. That information is scattered across package registries, code repositories and
+vulnerability databases. The observatory collects it for you and answers three questions:</p>
+<ul>
+<li>what is the latest stable version of each CMS?</li>
+<li>which versions fix a security issue, and how severe is it?</li>
+<li>which CMS has had the most alerts over the last twelve months?</li>
+</ul>
+<p>It is meant for agencies, freelance developers, technical teams and anyone who has to choose a CMS
+or keep their sites up to date.</p>
+<h2>Where does the data come from?</h2>
+<p>Releases come from the official registries (PyPI, Packagist) or from the projects' GitHub releases.
+Security advisories come from the open <a href="https://osv.dev/">OSV.dev</a> database. Collection is
+automatic and runs several times a day. Every advisory links back to its source.</p>
+<h2>Limitations</h2>
+<p>The observatory does not replace each project's official security announcements: an advisory may
+appear here a few hours later, and some vendors publish little to OSV. Summaries are generated
+automatically and may be inaccurate: always check the original advisory before acting.</p>
+<p>An RSS feed of security advisories is available in the footer.</p>""",
+    },
+}
+
 LEGAL = {
     "fr": {
         "title": "Mentions légales",

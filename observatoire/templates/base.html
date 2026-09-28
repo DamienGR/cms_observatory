@@ -63,6 +63,8 @@
           {% url 'watch:advisories-feed' as feed_url %}
           <ul>
             {% if feed_url %}<li><a href="{{ feed_url }}">{% translate "Flux RSS des avis" %}</a></li>{% endif %}
+            {% page_url "about" as about_url %}
+            {% if about_url %}<li><a href="{{ about_url }}">{% translate "À propos" %}</a></li>{% endif %}
           </ul>
         </div>
         <div class="col-6 col-md-3">
