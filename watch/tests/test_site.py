@@ -81,5 +81,6 @@ def test_setup_site_adds_about_and_legal_pages_to_existing_site(client, watch_pa
     about = client.get("/fr/a-propos/").content.decode()
     assert "Joomla" in about
     assert 'href="/fr/mentions-legales/"' in about  # pied de page
+    assert 'href="https://dg-tech.dev/"' in about
     assert 'href="/fr/a-propos/"' in about
     assert b'href="/en/about/"' in client.get("/en/about/").content

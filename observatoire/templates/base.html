@@ -82,6 +82,7 @@
           <p class="mb-0">© {% now "Y" %} Observatoire des CMS</p>
           {% page_url "legal-notice" as legal_url %}
           {% if legal_url %}<a href="{{ legal_url }}">{% translate "Mentions légales" %}</a>{% endif %}
+          <p class="mb-0">{% blocktranslate with link='<a href="https://dg-tech.dev/">dg-tech.dev</a>' %}Service fourni par {{ link }}{% endblocktranslate %}</p>
         </div>
       </div>
     </div>
