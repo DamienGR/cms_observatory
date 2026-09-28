@@ -8,7 +8,6 @@ djangocms-link>=5.2
 djangocms-frontend>=2.5
 djangocms-stories>=0.9
 djangocms-form-builder>=0.7
-djangocms-rest>=1.2
 djangocms-simple-admin-style
 django-filer>=3.6
 django-tasks-db>=0.13

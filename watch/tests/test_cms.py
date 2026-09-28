@@ -57,9 +57,9 @@ def test_menu_nodes_and_security_badge(rf, technology_content):
     assert nodes[0].attr["recent_advisories"] == 1
 
 
-@pytest.mark.parametrize("path", ["/api/watch/technologies/", "/api/watch/releases/?technology=django-cms"])
-def test_api(client, technology_content, path):
-    assert client.get(path).status_code == 200
+@pytest.mark.parametrize("path", ["/api/watch/technologies/", "/api/cms/"])
+def test_no_public_api(client, db, path):
+    assert client.get(path, follow=True).status_code == 404
 
 
 def test_toolbar_collect_requires_post(admin_client, technology):

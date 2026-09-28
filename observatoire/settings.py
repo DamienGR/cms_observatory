@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     "taggit",
     "parler",
     "djangocms_form_builder",
-    "djangocms_rest",
-    "rest_framework",
     "filer",
     "easy_thumbnails",
     "djangocms_frontend",
@@ -231,13 +229,6 @@ TASKS = {
         "BACKEND": os.environ.get("TASKS_BACKEND", "django.tasks.backends.immediate.ImmediateBackend"),
         "QUEUES": ["default", "llm"],
     }
-}
-
-# --- API ----------------------------------------------------------------------
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 50,
 }
 
 # --- Copilote IA (package djangocms-ai-copilot) ------------------------------

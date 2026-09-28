@@ -16,13 +16,10 @@ admin.site.site_title = _("Observatoire des CMS")
 admin.site.index_title = _("Administration")
 sitemaps = {"pages": CMSSitemap, "technologies": TechnologySitemap}
 
-# Hors i18n_patterns et AVANT le catch-all du CMS : une page dont le chemin
 # commencerait par « api » ne doit jamais masquer l'API.
 urlpatterns = [
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
-    path("api/cms/", include("djangocms_rest.urls")),
-    path("api/watch/", include("watch.api")),
 ]
 urlpatterns += i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),

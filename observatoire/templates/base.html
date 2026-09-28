@@ -63,7 +63,6 @@
           {% url 'watch:advisories-feed' as feed_url %}
           <ul>
             {% if feed_url %}<li><a href="{{ feed_url }}">{% translate "Flux RSS des avis" %}</a></li>{% endif %}
-            <li><a href="/api/watch/">{% translate "API publique" %}</a></li>
           </ul>
         </div>
         <div class="col-6 col-md-3">
