@@ -17,13 +17,15 @@ class Technology(models.Model):
     class Registry(models.TextChoices):
         PYPI = "pypi", "PyPI"
         PACKAGIST = "packagist", "Packagist"
+        GITHUB = "github", "GitHub"
 
     name = models.CharField(_("nom"), max_length=100)
     slug = models.SlugField(unique=True)
     website = models.URLField(_("site officiel"), blank=True)
     registry = models.CharField(_("registre"), max_length=20, choices=Registry.choices)
     package = models.CharField(
-        _("paquet"), max_length=200, help_text=_("Ex. django-cms (PyPI) ou drupal/core (Packagist)")
+        _("paquet"), max_length=200,
+        help_text=_("Ex. django-cms (PyPI), drupal/core (Packagist) ou joomla/joomla-cms (dépôt GitHub)"),
     )
     is_tracked = models.BooleanField(_("collecte active"), default=True)
     last_collected_at = models.DateTimeField(_("dernière collecte"), null=True, blank=True)
@@ -38,7 +40,9 @@ class Technology(models.Model):
 
     @property
     def osv_ecosystem(self):
-        return {"pypi": "PyPI", "packagist": "Packagist"}[self.registry]
+        # Les projets PHP publiés seulement sur GitHub (Joomla) sont référencés dans
+        # OSV sous l'écosystème Packagist, avec le nom de leur dépôt.
+        return {"pypi": "PyPI", "packagist": "Packagist", "github": "Packagist"}[self.registry]
 
     def latest_release(self):
         """Plus haute version parmi les 50 dernières publiées (les branches LTS se chevauchent)."""

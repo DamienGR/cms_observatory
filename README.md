@@ -1,7 +1,7 @@
 # Observatoire des CMS
 
 Site django CMS 5.1 qui suit les releases et les avis de sécurité de Drupal, WordPress,
-django CMS et Wagtail, et package `djangocms-ai-copilot` (copilote IA pour l'éditeur).
+Joomla, PrestaShop, Magento, django CMS et Wagtail, et package `djangocms-ai-copilot` (copilote IA pour l'éditeur).
 Le tutoriel complet détaille chaque fichier.
 
 ## Démarrer
@@ -22,6 +22,10 @@ python manage.py runserver
 Elle ne fait rien si le site a déjà des pages.
 Lancez la collecte depuis le menu « Observatoire » de la toolbar ou avec
 `python manage.py collect_watch`.
+
+Les releases viennent de PyPI, de Packagist ou des publications GitHub (Joomla, absent de
+Packagist) ; les avis de sécurité, d'OSV.dev. Joomla, PrestaShop et Magento sont ajoutés
+par la migration `watch.0003`.
 
 ## Interface
 

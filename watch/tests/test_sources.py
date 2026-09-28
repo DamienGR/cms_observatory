@@ -2,7 +2,12 @@ import httpx
 import pytest
 import respx
 
-from watch.sources import fetch_osv_advisories, fetch_packagist_releases, fetch_pypi_releases
+from watch.sources import (
+    fetch_github_releases,
+    fetch_osv_advisories,
+    fetch_packagist_releases,
+    fetch_pypi_releases,
+)
 
 
 @respx.mock
@@ -60,3 +65,27 @@ def test_osv_pagination_and_fixed_versions():
     assert first.severity == "moderate"
     assert first.url == "https://github.com/advisories/GHSA-aaaa"
     assert b'"page_token"' in route.calls[1].request.content
+
+
+@respx.mock
+def test_github_follows_pages_and_skips_drafts():
+    first = "https://api.github.com/repos/joomla/joomla-cms/releases?per_page=100"
+    second = "https://api.github.com/repos/joomla/joomla-cms/releases?per_page=100&page=2"
+    respx.get(first).respond(
+        headers={"Link": f'<{second}>; rel="next"'},
+        json=[
+            {"tag_name": "6.1.3", "published_at": "2026-09-02T16:00:00Z", "prerelease": False,
+             "draft": False, "html_url": "https://github.com/joomla/joomla-cms/releases/tag/6.1.3"},
+            {"tag_name": "6.2.0-beta3", "published_at": "2026-09-15T16:00:00Z", "prerelease": True,
+             "draft": False, "html_url": "https://github.com/joomla/joomla-cms/releases/tag/6.2.0-beta3"},
+            {"tag_name": "6.2.0", "published_at": None, "prerelease": False, "draft": True, "html_url": ""},
+        ],
+    )
+    respx.get(second).respond(json=[
+        {"tag_name": "v5.4.8", "published_at": "2026-09-02T15:00:00Z", "prerelease": False,
+         "draft": False, "html_url": "https://github.com/joomla/joomla-cms/releases/tag/v5.4.8"},
+    ])
+    with httpx.Client() as client:
+        releases = fetch_github_releases("joomla/joomla-cms", client)
+    assert [r.version for r in releases] == ["6.1.3", "6.2.0-beta3", "5.4.8"]
+    assert [r.is_prerelease for r in releases] == [False, True, False]

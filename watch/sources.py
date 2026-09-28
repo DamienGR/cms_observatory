@@ -1,4 +1,4 @@
-"""Collecte des releases (PyPI, Packagist) et des avis de sécurité (base OSV).
+"""Collecte des releases (PyPI, Packagist, GitHub) et des avis de sécurité (base OSV).
 
 Fonctions pures : elles prennent un client HTTP et renvoient des dataclasses,
 ce qui les rend faciles à tester avec des réponses simulées.
@@ -85,6 +85,30 @@ def fetch_packagist_releases(package: str, client: httpx.Client) -> list[Release
     return releases
 
 
+def fetch_github_releases(repository: str, client: httpx.Client) -> list[ReleaseData]:
+    # Pour les projets absents des registres (Joomla). Sans jeton, GitHub autorise
+    # 60 requêtes par heure : largement assez pour une collecte toutes les six heures.
+    url = f"https://api.github.com/repos/{repository}/releases?per_page=100"
+    releases = []
+    while url:
+        response = client.get(url, headers={"Accept": "application/vnd.github+json"})
+        response.raise_for_status()
+        for entry in response.json():
+            if entry.get("draft") or not entry.get("published_at"):
+                continue
+            version = entry["tag_name"].removeprefix("v")
+            releases.append(
+                ReleaseData(
+                    version=version,
+                    published_at=parse_datetime(entry["published_at"]),
+                    url=entry["html_url"],
+                    is_prerelease=entry.get("prerelease", False) or bool(PRERELEASE_RE.search(version)),
+                )
+            )
+        url = response.links.get("next", {}).get("url")
+    return releases
+
+
 def fetch_osv_advisories(ecosystem: str, package: str, client: httpx.Client) -> list[AdvisoryData]:
     query = {"package": {"name": package, "ecosystem": ecosystem}}
     advisories = []
@@ -130,4 +154,5 @@ def _parse_osv(vuln: dict, package: str) -> AdvisoryData:
 RELEASE_FETCHERS = {
     "pypi": fetch_pypi_releases,
     "packagist": fetch_packagist_releases,
+    "github": fetch_github_releases,
 }

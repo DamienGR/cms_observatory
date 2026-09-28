@@ -12,19 +12,19 @@ HOME = {
     "fr": {
         "title": "Accueil",
         "hero_title": "Les versions et failles des CMS, suivies pour vous",
-        "hero_subtitle": "Drupal, WordPress, django CMS et Wagtail : dernières releases et avis de "
+        "hero_subtitle": "Drupal, WordPress, Joomla, PrestaShop, Magento, django CMS et Wagtail : dernières releases et avis de "
         "sécurité, collectés automatiquement plusieurs fois par jour.",
         "sidebar_title": "<h2>Correctifs de sécurité</h2>",
-        "text": "<p>L'observatoire interroge PyPI, Packagist et OSV.dev, puis résume chaque avis "
+        "text": "<p>L'observatoire interroge PyPI, Packagist, GitHub et OSV.dev, puis résume chaque avis "
         "de sécurité pour que vous sachiez en un coup d'œil s'il faut mettre à jour.</p><h2>Dernières releases</h2>",
     },
     "en": {
         "title": "Home",
         "hero_title": "CMS releases and vulnerabilities, tracked for you",
-        "hero_subtitle": "Drupal, WordPress, django CMS and Wagtail: latest releases and security "
+        "hero_subtitle": "Drupal, WordPress, Joomla, PrestaShop, Magento, django CMS and Wagtail: latest releases and security "
         "advisories, collected automatically several times a day.",
         "sidebar_title": "<h2>Security fixes</h2>",
-        "text": "<p>The observatory queries PyPI, Packagist and OSV.dev, then summarises each "
+        "text": "<p>The observatory queries PyPI, Packagist, GitHub and OSV.dev, then summarises each "
         "security advisory so you know at a glance whether to upgrade.</p><h2>Latest releases</h2>",
     },
 }
