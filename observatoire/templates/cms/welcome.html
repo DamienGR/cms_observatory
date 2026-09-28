@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load i18n static cms_static %}
+{% comment %}
+  Remplace la page « Bienvenue dans django CMS » affichée tant qu'aucune page n'est publiée.
+  L'originale affiche la version du CMS et redirige les visiteurs vers la connexion à l'admin.
+{% endcomment %}
+{% block title %}Observatoire des CMS{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+  <div class="obs-system">
+    {% if user.is_staff %}
+      <h1>{% translate "Le site n'a pas encore de page" %}</h1>
+      <p class="lead">{% translate "Créez les pages d'accueil et de l'observatoire en une commande, ou ajoutez une première page à la main." %}</p>
+      <pre class="obs-panel mt-4"><code>python manage.py setup_site</code></pre>
+      <p><a class="btn btn-primary js-welcome-add" href="{% url 'admin:cms_pagecontent_changelist' %}">{% translate "Ajouter une page" %}</a></p>
+      <div id="cms-welcome-config"
+           data-add-url="{% url 'admin:cms_wizard_create' %}?language={{ LANGUAGE_CODE }}"
+           data-add-title="{% translate 'Nouvelle page' %}"></div>
+      <script src="{% static 'cms/js/welcome.js' %}" {% csp_nonce_attr %}></script>
+    {% else %}
+      <h1>{% translate "L'observatoire ouvre bientôt" %}</h1>
+      <p class="lead">{% translate "Nous préparons le suivi des versions et des failles de sécurité des principaux CMS. Revenez dans quelques jours." %}</p>
+    {% endif %}
+  </div>
+{% endblock %}

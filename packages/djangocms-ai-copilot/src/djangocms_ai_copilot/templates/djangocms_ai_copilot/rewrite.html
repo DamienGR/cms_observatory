@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}{% load i18n %}
+{% block content %}
+<form method="post">{% csrf_token %}
+  {{ form.non_field_errors }}
+  <fieldset class="module aligned">
+    {% for field in form.visible_fields %}
+      <div class="form-row">{{ field.errors }}{{ field.label_tag }} {{ field }}</div>
+    {% endfor %}
+    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+  </fieldset>
+  {% if proposal %}
+    <h2>{% translate "Proposal" %}</h2>
+    <div class="module">{{ proposal|safe }}</div>
+    <details><summary>{% translate "Original" %}</summary><div>{{ original|safe }}</div></details>
+  {% endif %}
+  <div class="submit-row">
+    <input type="submit" name="_preview" value="{% if proposal %}{% translate 'Try again' %}{% else %}{% translate 'Preview' %}{% endif %}">
+    {% if proposal %}<input type="submit" name="_apply" value="{% translate 'Apply to the draft' %}" class="default">{% endif %}
+  </div>
+</form>
+{% endblock %}

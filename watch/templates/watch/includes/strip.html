@@ -1,0 +1,11 @@
+{% load i18n %}<div class="obs-strip">
+  <ol class="obs-strip-cells" role="img" aria-label="{% blocktranslate count total=row.advisory_count %}{{ total }} avis de sécurité sur 12 mois{% plural %}{{ total }} avis de sécurité sur 12 mois{% endblocktranslate %}">
+    {% for month in row.months %}
+      <li{% if month.severity %} data-severity="{{ month.severity }}"{% endif %} title="{{ month.start|date:'F Y'|capfirst }} : {% if month.count %}{% blocktranslate count total=month.count with severity=month.severity_label %}{{ total }} avis, gravité max. {{ severity }}{% plural %}{{ total }} avis, gravité max. {{ severity }}{% endblocktranslate %}{% else %}{% translate 'aucun avis' %}{% endif %}"></li>
+    {% endfor %}
+  </ol>
+  <div class="obs-strip-caption" aria-hidden="true">
+    <span>{{ row.months.0.start|date:"N Y" }}</span>
+    <span>{% blocktranslate count total=row.advisory_count %}{{ total }} avis{% plural %}{{ total }} avis{% endblocktranslate %}</span>
+  </div>
+</div>

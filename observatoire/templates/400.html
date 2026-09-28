@@ -1,0 +1,23 @@
+<!doctype html>{% load static %}
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Requête invalide · Observatoire des CMS</title>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/observatoire.css' %}">
+</head>
+<body>
+  <header class="obs-header"><div class="container py-3">
+    <a class="obs-brand" href="/"><img src="{% static 'img/logo.svg' %}" alt="" width="32" height="32"> Observatoire des CMS</a>
+  </div></header>
+  <main class="obs-main"><div class="container"><div class="obs-system">
+    <p class="obs-system-code" aria-hidden="true">400</p>
+    <h1>Cette requête n'a pas pu être traitée</h1>
+    <p class="lead">Vérifiez l'adresse, puis réessayez.</p>
+    <p><a class="btn btn-primary" href="/">Retour à l'accueil</a></p>
+  </div></div></main>
+</body>
+</html>

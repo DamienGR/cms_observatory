@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% load i18n %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+  <div class="obs-system">
+    <h1>{% translate "Pas d'aperçu pour cette page" %}</h1>
+    <p class="lead">{% translate "L'application rattachée à cette page ne fournit pas de contenu à sa racine." %}</p>
+    <p>{% translate "Elle redirige vers :" %} <a href="{{ absolute_url }}">{{ absolute_url }}</a></p>
+  </div>
+{% endblock %}

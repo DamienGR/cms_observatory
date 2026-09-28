@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% load cms_tags %}
+{% block content %}
+  {% placeholder "hero" %}
+  <div class="row g-5">
+    <div class="col-lg-8">{% placeholder "content" %}</div>
+    <aside class="col-lg-4">{% placeholder "sidebar" %}</aside>
+  </div>
+{% endblock %}

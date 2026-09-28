@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: observatoire
+      POSTGRES_USER: observatoire
+      POSTGRES_PASSWORD: observatoire
+    volumes: [pgdata:/var/lib/postgresql/data]
+  redis:
+    image: redis:7
+  web:
+    build: .
+    env_file: .env
+    command: sh -c "python manage.py migrate --noinput && gunicorn observatoire.wsgi --bind 0.0.0.0:8000 --workers 3"
+    ports: ["8000:8000"]
+    volumes: [media:/app/media]
+    depends_on: [db, redis]
+  worker:
+    build: .
+    env_file: .env
+    command: python manage.py db_worker --queue-name default
+    depends_on: [db]
+  worker-llm:
+    build: .
+    env_file: .env
+    command: python manage.py db_worker --queue-name llm
+    volumes: [media:/app/media]
+    depends_on: [db]
+  scheduler:
+    build: .
+    env_file: .env
+    command: sh -c "while true; do python manage.py collect_watch; sleep 21600; done"
+    depends_on: [db]
+volumes:
+  pgdata:
+  media:

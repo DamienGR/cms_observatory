@@ -1,0 +1,18 @@
+{% load menu_tags i18n %}{% for child in children %}
+<li class="nav-item{% if child.children %} dropdown{% endif %}">
+  {% if child.children %}
+    <a class="nav-link dropdown-toggle{% if child.selected or child.ancestor %} active{% endif %}" href="{{ child.get_absolute_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false"{% if child.selected %} aria-current="page"{% endif %}>{{ child.get_menu_title }}</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item{% if child.selected %} active{% endif %}" href="{{ child.get_absolute_url }}">{{ child.get_menu_title }}</a></li>
+      <li><hr class="dropdown-divider"></li>
+      {% for sub in child.children %}
+        <li><a class="dropdown-item{% if sub.selected %} active{% endif %}" href="{{ sub.get_absolute_url }}"{% if sub.selected %} aria-current="page"{% endif %}>
+          <span>{{ sub.get_menu_title }}</span>
+          {% if sub.attr.recent_advisories %}<span class="obs-sev" data-severity="high" title="{% blocktranslate count total=sub.attr.recent_advisories %}{{ total }} avis de sécurité ces 30 derniers jours{% plural %}{{ total }} avis de sécurité ces 30 derniers jours{% endblocktranslate %}">{{ sub.attr.recent_advisories }}</span>{% endif %}
+        </a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <a class="nav-link{% if child.selected or child.ancestor %} active{% endif %}" href="{{ child.get_absolute_url }}"{% if child.selected %} aria-current="page"{% endif %}>{{ child.get_menu_title }}</a>
+  {% endif %}
+</li>{% endfor %}

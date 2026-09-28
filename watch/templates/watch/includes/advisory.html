@@ -1,0 +1,11 @@
+{% load i18n %}<li class="obs-advisory">
+  <div class="obs-advisory-head">
+    <span class="obs-sev" data-severity="{{ advisory.severity }}">{{ advisory.get_severity_display|capfirst }}</span>
+    <span>{{ advisory.technology.name }}</span>
+    <a href="{{ advisory.url }}" rel="noopener">{{ advisory.identifier }}</a>
+  </div>
+  <p>{{ advisory.summary|default:advisory.title }}</p>
+  <p class="obs-meta">
+    {{ advisory.published_at|date:"j N Y" }}{% if advisory.fixed_versions %} — {% translate "corrigé en" %} {{ advisory.fixed_versions|join:", " }}{% endif %}
+  </p>
+</li>

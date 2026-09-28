@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "djangocms-ai-copilot"
+version = "0.1.0"
+description = "An AI copilot for django CMS editors: meta descriptions, rewrites, translations and alt texts, always saved as drafts."
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.12"
+authors = [{ name = "Damien Gros" }]
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Framework :: Django :: 6.1",
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Content Management System",
+]
+dependencies = [
+    "django-cms>=5.1,<5.2",
+    "djangocms-text>=1.0",
+    "anthropic>=1.0",
+]
+
+[project.optional-dependencies]
+tasks-backport = ["django-tasks>=0.12"]  # Django 5.2 uniquement
+test = ["pytest", "pytest-django", "djangocms-text", "djangocms-versioning", "django-filer"]
+
+[project.urls]
+Source = "https://github.com/votre-compte/djangocms-ai-copilot"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+djangocms_ai_copilot = ["templates/**/*", "locale/**/*"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = [".", "src"]

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /fr/admin/
+Disallow: /en/admin/
+Disallow: /*?toolbar_on
+Disallow: /*?edit
+Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml

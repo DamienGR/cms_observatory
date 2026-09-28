@@ -1,0 +1,91 @@
+{% extends "base.html" %}{% load cms_tags i18n %}
+{% block content %}
+  {% placeholder "intro" or %}
+    <header class="obs-page-head">
+      <h1>{% page_attribute "page_title" %}</h1>
+      <p class="lead">{% translate "Les dernières versions et failles de sécurité des CMS suivis, mises à jour plusieurs fois par jour." %}</p>
+    </header>
+  {% endplaceholder %}
+
+  <section class="obs-section" aria-labelledby="board-title">
+    <div class="obs-section-head">
+      <h2 id="board-title">{% translate "Où en est chaque CMS" %}</h2>
+      <span class="obs-meta">{% translate "Dernière version stable et avis de sécurité des 12 derniers mois" %}</span>
+    </div>
+    {% if board %}
+      <ul class="obs-board">
+        {% for row in board %}
+          <li class="obs-board-row">
+            <div class="obs-board-name">
+              <a href="{% url 'watch:technology-detail' row.technology.slug %}">{{ row.technology.name }}</a>
+              <small>{{ row.technology.package }}</small>
+            </div>
+            <div class="obs-version">
+              {% if row.latest %}
+                <a href="{{ row.latest.url }}" rel="noopener">{{ row.latest.version }}</a>
+                <small>{% blocktranslate with date=row.latest.published_at|date:"j F Y" %}publiée le {{ date }}{% endblocktranslate %}</small>
+              {% else %}
+                —<small>{% translate "pas encore collectée" %}</small>
+              {% endif %}
+            </div>
+            {% include "watch/includes/strip.html" %}
+          </li>
+        {% endfor %}
+      </ul>
+      <ul class="obs-legend">
+        <li data-severity="critical">{% translate "critique" %}</li>
+        <li data-severity="high">{% translate "élevée" %}</li>
+        <li data-severity="moderate">{% translate "modérée" %}</li>
+        <li data-severity="low">{% translate "faible" %}</li>
+        <li data-severity="unknown">{% translate "non évaluée" %}</li>
+        <li>{% translate "aucun avis" %}</li>
+      </ul>
+    {% else %}
+      <div class="obs-empty">
+        <strong>{% translate "Aucune technologie suivie" %}</strong>
+        {% translate "Ajoutez une technologie depuis le menu « Observatoire » de la barre d'outils." %}
+      </div>
+    {% endif %}
+  </section>
+
+  <div class="row g-5 obs-section">
+    <section class="col-lg-7" aria-labelledby="releases-title">
+      <div class="obs-section-head"><h2 id="releases-title">{% translate "Dernières releases" %}</h2></div>
+      {% if releases %}
+        <div class="obs-panel">
+          <table class="obs-releases">
+            <thead><tr><th scope="col">{% translate "CMS" %}</th><th scope="col">{% translate "Version" %}</th><th scope="col">{% translate "Date" %}</th></tr></thead>
+            <tbody>
+              {% for release in releases %}
+                <tr>
+                  <td><a class="obs-quiet" href="{% url 'watch:technology-detail' release.technology.slug %}">{{ release.technology.name }}</a></td>
+                  <td><a class="obs-v" href="{{ release.url }}" rel="noopener">{{ release.version }}</a>{% if release.is_security %} <span class="obs-tag-security">{% translate "sécurité" %}</span>{% endif %}</td>
+                  <td class="obs-meta text-nowrap">{{ release.published_at|date:"j N Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="obs-empty">
+          <strong>{% translate "Aucune release collectée" %}</strong>
+          {% translate "Lancez la collecte depuis le menu « Observatoire » de la barre d'outils, ou avec la commande collect_watch." %}
+        </div>
+      {% endif %}
+    </section>
+    <section class="col-lg-5" aria-labelledby="advisories-title">
+      <div class="obs-section-head">
+        <h2 id="advisories-title">{% translate "Avis de sécurité" %}</h2>
+        <a href="{% url 'watch:advisories' %}">{% translate "Voir tous les avis" %}</a>
+      </div>
+      {% if advisories %}
+        <div class="obs-panel">
+          <ul class="obs-advisories">{% for advisory in advisories %}{% include "watch/includes/advisory.html" %}{% endfor %}</ul>
+        </div>
+        <p class="obs-meta mt-3"><a href="{% url 'watch:advisories-feed' %}">{% translate "S'abonner au flux RSS" %}</a></p>
+      {% else %}
+        <div class="obs-empty"><strong>{% translate "Aucun avis de sécurité" %}</strong>{% translate "Les avis apparaîtront ici après la prochaine collecte." %}</div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

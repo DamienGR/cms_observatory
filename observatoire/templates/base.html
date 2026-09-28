@@ -1,0 +1,87 @@
+<!doctype html>{% load cms_tags cms_static menu_tags sekizai_tags i18n static djangocms_alias_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% page_attribute "page_title" as page_title %}{% if page_title %}{{ page_title }} · {% endif %}Observatoire des CMS{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% page_attribute "meta_description" as description %}{{ description|default_if_none:"" }}{% endblock %}">
+  <meta name="theme-color" content="#16203a">
+  <meta property="og:site_name" content="Observatoire des CMS">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="preload" href="{% static 'fonts/instrument-sans-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/observatoire.css' %}">
+  {% block extra_head %}{% endblock %}
+  {% render_block "css" %}
+</head>
+<body>
+  {% cms_toolbar %}
+  <a class="obs-skip" href="#contenu">{% translate "Aller au contenu" %}</a>
+  <header class="obs-header">
+    <nav class="navbar navbar-expand-lg" aria-label="{% translate 'Navigation principale' %}">
+      <div class="container">
+        <a class="obs-brand" href="{% url 'pages-root' %}">
+          <img src="{% static 'img/logo.svg' %}" alt="" width="32" height="32">
+          Observatoire des CMS
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#obs-nav" aria-controls="obs-nav" aria-expanded="false" aria-label="{% translate 'Ouvrir le menu' %}">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="obs-nav">
+          <ul class="navbar-nav ms-lg-4 me-auto">{% show_menu 0 1 1 1 "watch/menu/menu.html" %}</ul>
+          <ul class="navbar-nav obs-lang">{% language_chooser "watch/menu/language_chooser.html" %}</ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenu" class="obs-main" tabindex="-1">
+    <div class="container">
+      {% if messages %}
+        {% for message in messages %}<div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %}" role="status">{{ message }}</div>{% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="obs-footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <a class="obs-brand text-white mb-2" href="{% url 'pages-root' %}">
+            <img src="{% static 'img/logo.svg' %}" alt="" width="32" height="32">
+            Observatoire des CMS
+          </a>
+          <p class="mb-0">{% translate "Versions et avis de sécurité de Drupal, WordPress, django CMS et Wagtail, collectés automatiquement plusieurs fois par jour." %}</p>
+        </div>
+        <div class="col-6 col-md-3 offset-md-1">
+          <h2>{% translate "Suivre" %}</h2>
+          {% url 'watch:advisories-feed' as feed_url %}
+          <ul>
+            {% if feed_url %}<li><a href="{{ feed_url }}">{% translate "Flux RSS des avis" %}</a></li>{% endif %}
+            <li><a href="/api/watch/">{% translate "API publique" %}</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3">
+          <h2>{% translate "Sources" %}</h2>
+          <ul>
+            <li><a href="https://pypi.org/" rel="noopener">PyPI</a></li>
+            <li><a href="https://packagist.org/" rel="noopener">Packagist</a></li>
+            <li><a href="https://osv.dev/" rel="noopener">OSV.dev</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="obs-footer-bottom">
+        {% static_alias "footer" %}
+        <p class="mb-0">© {% now "Y" %} Observatoire des CMS</p>
+      </div>
+    </div>
+  </footer>
+  <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}" {% csp_nonce_attr %}></script>
+  {% render_block "js" %}
+</body>
+</html>

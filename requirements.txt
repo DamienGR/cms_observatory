@@ -1,0 +1,20 @@
+Django>=6.1,<6.2
+django-cms>=5.1,<5.2
+djangocms-versioning>=2.7
+djangocms-moderation>=2.5
+djangocms-alias>=3.2
+djangocms-text>=1.0
+djangocms-link>=5.2
+djangocms-frontend>=2.5
+djangocms-stories>=0.9
+djangocms-form-builder>=0.7
+djangocms-rest>=1.2
+djangocms-simple-admin-style
+django-filer>=3.6
+django-tasks-db>=0.13
+dj-database-url
+whitenoise
+httpx
+psycopg[binary]
+gunicorn
+-e ./packages/djangocms-ai-copilot

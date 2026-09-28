@@ -1,0 +1,9 @@
+{% load frontend cms_component i18n %}
+{% cms_component "ObservatoryHero" name=_("Bandeau Observatoire") module=_("Observatoire") %}
+{% field "title" forms.CharField required=True label=_("Titre") %}
+{% field "subtitle" forms.CharField required=False label=_("Sous-titre") widget=forms.Textarea %}
+<section class="obs-hero">
+  <h1>{% inline_field "title" %}</h1>
+  <p>{% inline_field "subtitle" %}</p>
+  {% childplugins %}{% endchildplugins %}
+</section>

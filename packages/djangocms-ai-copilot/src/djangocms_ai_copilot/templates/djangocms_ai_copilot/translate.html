@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}{% load i18n %}
+{% block content %}
+{% if result %}
+  <p class="success">{% blocktranslate %}Translation queued. The new language appears as a draft in the page's language menu once it is ready.{% endblocktranslate %}</p>
+  <p>{% translate "Task" %} {{ result.id }} — {{ result.status }}</p>
+{% elif not languages %}
+  <p>{% translate "This page already exists in every language of the site." %}</p>
+{% else %}
+  <form method="post">{% csrf_token %}
+    <p>{% blocktranslate with title=source.title %}Translate “{{ title }}” and its text plugins. Other plugins are copied as they are.{% endblocktranslate %}</p>
+    <fieldset class="module aligned">
+      {% for field in form %}<div class="form-row">{{ field.errors }}{{ field.label_tag }} {{ field }}</div>{% endfor %}
+    </fieldset>
+    <div class="submit-row"><input type="submit" value="{% translate 'Translate as a draft' %}" class="default"></div>
+  </form>
+{% endif %}
+{% endblock %}

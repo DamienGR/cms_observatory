@@ -1,0 +1,47 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Avis de sécurité" %} · Observatoire des CMS{% endblock %}
+{% block content %}
+  <header class="obs-page-head">
+    <h1>{% translate "Avis de sécurité" %}</h1>
+    <p class="lead">{% translate "Toutes les failles publiées sur OSV.dev pour les CMS suivis, de la plus récente à la plus ancienne." %}</p>
+  </header>
+
+  <form class="obs-filters" method="get">
+    <div>
+      <label class="form-label" for="filtre-technologie">{% translate "Technologie" %}</label>
+      <select class="form-select" id="filtre-technologie" name="technologie">
+        <option value="">{% translate "Toutes" %}</option>
+        {% for technology in technologies %}<option value="{{ technology.slug }}"{% if request.GET.technologie == technology.slug %} selected{% endif %}>{{ technology.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="form-label" for="filtre-severite">{% translate "Sévérité" %}</label>
+      <select class="form-select" id="filtre-severite" name="severite">
+        <option value="">{% translate "Toutes" %}</option>
+        {% for value, label in severities %}<option value="{{ value }}"{% if request.GET.severite == value %} selected{% endif %}>{{ label|capfirst }}</option>{% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary">{% translate "Filtrer" %}</button>
+    {% if request.GET.technologie or request.GET.severite %}<a class="btn btn-link" href="{{ request.path }}">{% translate "Réinitialiser" %}</a>{% endif %}
+  </form>
+
+  {% if object_list %}
+    <p class="obs-meta">{% blocktranslate count total=paginator.count %}{{ total }} avis{% plural %}{{ total }} avis{% endblocktranslate %}</p>
+    <div class="obs-panel">
+      <ul class="obs-advisories">{% for advisory in object_list %}{% include "watch/includes/advisory.html" %}{% endfor %}</ul>
+    </div>
+  {% else %}
+    <div class="obs-empty">
+      <strong>{% translate "Aucun avis ne correspond à ces filtres" %}</strong>
+      {% translate "Élargissez la recherche à toutes les technologies ou à toutes les sévérités." %}
+    </div>
+  {% endif %}
+
+  {% if is_paginated %}
+    <nav aria-label="{% translate 'Pagination' %}"><ul class="pagination">
+      {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?{% querystring page=page_obj.previous_page_number %}" rel="prev">{% translate "Précédent" %}</a></li>{% endif %}
+      <li class="page-item disabled"><span class="page-link">{% blocktranslate with number=page_obj.number total=page_obj.paginator.num_pages %}Page {{ number }} sur {{ total }}{% endblocktranslate %}</span></li>
+      {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?{% querystring page=page_obj.next_page_number %}" rel="next">{% translate "Suivant" %}</a></li>{% endif %}
+    </ul></nav>
+  {% endif %}
+{% endblock %}

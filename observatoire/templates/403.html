@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Accès refusé" %} · Observatoire des CMS{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+  <div class="obs-system">
+    <p class="obs-system-code" aria-hidden="true">403</p>
+    <h1>{% translate "Vous n'avez pas accès à cette page" %}</h1>
+    <p class="lead">{% translate "Connectez-vous avec un compte autorisé, ou revenez à l'accueil." %}</p>
+    <p><a class="btn btn-primary" href="{% url 'pages-root' %}">{% translate "Retour à l'accueil" %}</a></p>
+  </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load i18n %}<div class="obs-panel mb-4">
+  {% if releases %}
+    <ul class="obs-release-list">
+      {% for release in releases %}
+        <li>
+          <span>{{ release.technology.name }} <a class="fw-semibold" href="{{ release.url }}" rel="noopener">{{ release.version }}</a>{% if release.is_security %} <span class="obs-tag-security">{% translate "sécurité" %}</span>{% endif %}</span>
+          <span class="obs-meta">{{ release.published_at|date:"j N Y" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="obs-meta mb-0">{% translate "Aucune release pour le moment." %}</p>
+  {% endif %}
+</div>

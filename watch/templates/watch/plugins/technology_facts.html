@@ -1,0 +1,5 @@
+{% load i18n %}<dl class="obs-facts">
+  <div><dt>{% translate "Dernière version" %}</dt><dd>{{ latest.version|default:"—" }}</dd></div>
+  <div><dt>{% translate "Publiée le" %}</dt><dd>{{ latest.published_at|date:"j N Y"|default:"—" }}</dd></div>
+  <div><dt>{% translate "Avis de sécurité (12 mois)" %}</dt><dd>{{ advisories_last_year }}</dd></div>
+</dl>

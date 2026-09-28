@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% load cms_tags i18n %}
+{% block title %}{{ technology.name }} · Observatoire des CMS{% endblock %}
+{% block meta_description %}{{ object.tagline }}{% endblock %}
+{% block content %}
+  <header class="obs-page-head obs-tech-head">
+    <div>
+      <h1>{{ technology.name }}</h1>
+      <p class="lead">{{ object.tagline }}</p>
+      {% if technology.website %}<p class="obs-meta mt-2 mb-0"><a href="{{ technology.website }}" rel="noopener">{% translate "Site officiel" %}</a> — {{ technology.get_registry_display }} : {{ technology.package }}</p>{% endif %}
+    </div>
+    <div>
+      <p class="obs-version">
+        {% if row.latest %}{{ row.latest.version }}<small>{% blocktranslate with date=row.latest.published_at|date:"j F Y" %}dernière version, publiée le {{ date }}{% endblocktranslate %}</small>
+        {% else %}—<small>{% translate "pas encore collectée" %}</small>{% endif %}
+      </p>
+      {% include "watch/includes/strip.html" %}
+    </div>
+  </header>
+  <div class="row g-5">
+    <div class="col-lg-8 obs-prose">
+      {% placeholder "content" %}
+      {% if object.verdict %}<section class="obs-verdict"><h2>{% translate "Notre avis" %}</h2>{{ object.verdict|linebreaks }}</section>{% endif %}
+    </div>
+    <aside class="col-lg-4 obs-aside">
+      <section class="obs-panel" aria-labelledby="tech-releases">
+        <h2 id="tech-releases">{% translate "Releases" %}</h2>
+        {% if releases %}
+          <ul class="obs-release-list">
+            {% for release in releases %}<li><a href="{{ release.url }}" rel="noopener">{{ release.version }}</a> <span class="obs-meta">{{ release.published_at|date:"j N Y" }}</span></li>{% endfor %}
+          </ul>
+        {% else %}
+          <p class="obs-meta mb-0">{% translate "Aucune release collectée pour le moment." %}</p>
+        {% endif %}
+      </section>
+      <section class="obs-panel" aria-labelledby="tech-advisories">
+        <h2 id="tech-advisories">{% translate "Avis de sécurité" %}</h2>
+        {% if advisories %}
+          <ul class="obs-advisories">{% for advisory in advisories %}{% include "watch/includes/advisory.html" %}{% endfor %}</ul>
+          <p class="mt-3 mb-0"><a href="{% url 'watch:advisories' %}?technologie={{ technology.slug }}">{% translate "Tous les avis" %}</a></p>
+        {% else %}
+          <p class="obs-meta mb-0">{% translate "Aucun avis connu." %}</p>
+        {% endif %}
+      </section>
+      {% if related_pages %}
+        <section class="obs-panel" aria-labelledby="tech-related">
+          <h2 id="tech-related">{% translate "À lire aussi" %}</h2>
+          <ul class="mb-0">{% for page, url in related_pages %}<li><a href="{{ url }}">{{ page.get_title }}</a></li>{% endfor %}</ul>
+        </section>
+      {% endif %}
+    </aside>
+  </div>
+{% endblock %}

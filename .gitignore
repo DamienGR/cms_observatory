@@ -1,0 +1,9 @@
+db.sqlite3
+media/
+staticfiles/
+.env
+__pycache__/
+.venv/
+*:Zone.Identifier
+*.egg-info/
+.pytest_cache/

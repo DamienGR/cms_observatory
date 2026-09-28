@@ -1,0 +1,13 @@
+{% load i18n %}{% with latest=instance.technology.latest_release %}<div class="col"><article class="card h-100">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-baseline gap-2">
+      <h3 class="card-title mb-0">{{ instance.technology.name }}</h3>
+      <span class="obs-score" aria-label="{% blocktranslate with score=instance.score %}Note : {{ score }} sur 5{% endblocktranslate %}">{{ instance.score }}/5</span>
+    </div>
+    {% if latest %}<p class="obs-meta mb-0">{% translate "Dernière version" %} : {{ latest.version }}</p>{% endif %}
+    <dl class="mb-0">
+      {% if instance.pros %}<dt>{% translate "Points forts" %}</dt><dd>{{ instance.pros|linebreaksbr }}</dd>{% endif %}
+      {% if instance.cons %}<dt>{% translate "Points faibles" %}</dt><dd>{{ instance.cons|linebreaksbr }}</dd>{% endif %}
+    </dl>
+  </div>
+</article></div>{% endwith %}

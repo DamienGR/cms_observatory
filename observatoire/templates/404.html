@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Page introuvable" %} · Observatoire des CMS{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+  <div class="obs-system">
+    <p class="obs-system-code" aria-hidden="true">404</p>
+    <h1>{% translate "Cette page n'existe pas" %}</h1>
+    <p class="lead">{% translate "L'adresse est peut-être mal saisie, ou la page a été déplacée." %}</p>
+    <p><a class="btn btn-primary" href="{% url 'pages-root' %}">{% translate "Retour à l'accueil" %}</a></p>
+  </div>
+{% endblock %}

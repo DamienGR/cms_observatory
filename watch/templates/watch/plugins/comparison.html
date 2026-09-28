@@ -1,0 +1,6 @@
+{% load cms_tags %}<section class="obs-compare my-5">
+  <h2 class="mb-3">{{ instance.title }}</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-3">
+    {% for plugin in instance.child_plugin_instances %}{% render_plugin plugin %}{% endfor %}
+  </div>
+</section>
