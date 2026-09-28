@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.tasks import task
+from django.utils import timezone
 from django.utils.html import strip_tags
 
 from djangocms_ai_copilot.services import ask
@@ -12,13 +15,19 @@ ADVISORY_SYSTEM_PROMPT = (
     "en 3 phrases maximum : ce qui est touché, le risque concret, l'action à mener "
     "(versions correctives incluses). Pas de mise en forme Markdown."
 )
+# Au-delà, l'avis garde son titre : inutile de payer le résumé de tout l'historique
+# lors de la première collecte d'une source (plus de 300 avis Joomla depuis 2005).
+SUMMARY_MAX_AGE = timedelta(days=183)
 
 
 @task()
 def collect_technology_task(technology_id: int) -> dict:
     technology = Technology.objects.get(pk=technology_id)
     report = collect_technology(technology)
-    for advisory_id in report.new_advisory_ids:
+    recent = Advisory.objects.filter(
+        pk__in=report.new_advisory_ids, published_at__gte=timezone.now() - SUMMARY_MAX_AGE
+    ).values_list("pk", flat=True)
+    for advisory_id in recent:
         summarize_advisory_task.enqueue(advisory_id)
     if report.new_advisory_ids:
         # Les badges « failles récentes » du menu dépendent de ces données.

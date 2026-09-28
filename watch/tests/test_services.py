@@ -1,6 +1,10 @@
+from datetime import timedelta
+from types import SimpleNamespace
+
 import respx
 from django.utils import timezone
 
+from watch import tasks
 from watch.models import Advisory, Release
 from watch.services import collect_technology, deduplicate
 from watch.sources import AdvisoryData
@@ -77,6 +81,21 @@ def test_collect_merges_configured_sources(technology):
     assert b'"ecosystem":"Bitnami"' in osv.calls[0].request.content
     assert set(Advisory.objects.values_list("identifier", flat=True)) == {"GHSA-wp", "BIT-wordpress-8"}
     assert Release.objects.get(version="5.1.0").is_security
+
+
+@respx.mock
+def test_only_recent_advisories_are_summarized(technology, monkeypatch):
+    summarized = []
+    monkeypatch.setattr(tasks, "summarize_advisory_task", SimpleNamespace(enqueue=summarized.append))
+    recent = (timezone.now() - timedelta(days=30)).isoformat()
+    respx.get("https://pypi.org/pypi/django-cms/json").respond(json=PYPI)
+    respx.post("https://api.osv.dev/v1/query").respond(json={"vulns": [
+        {"id": "GHSA-new", "published": recent, "modified": recent},
+        {"id": "GHSA-old", "published": "2024-01-10T00:00:00Z", "modified": "2024-01-10T00:00:00Z"},
+    ]})
+
+    tasks.collect_technology_task.call(technology.pk)
+    assert summarized == [Advisory.objects.get(identifier="GHSA-new").pk]
 
 
 def test_default_advisory_source_is_the_package_in_osv(technology):
