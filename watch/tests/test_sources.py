@@ -4,7 +4,9 @@ import respx
 
 from watch.sources import (
     expand_minified,
+    fetch_github_advisories,
     fetch_github_releases,
+    fetch_joomla_advisories,
     fetch_osv_advisories,
     fetch_packagist_releases,
     fetch_pypi_releases,
@@ -111,3 +113,102 @@ def test_github_follows_pages_and_skips_drafts():
         releases = fetch_github_releases("joomla/joomla-cms", client)
     assert [r.version for r in releases] == ["6.1.3", "6.2.0-beta3", "5.4.8"]
     assert [r.is_prerelease for r in releases] == [False, True, False]
+
+
+@respx.mock
+def test_github_repository_advisories():
+    respx.get(
+        "https://api.github.com/repos/WordPress/wordpress-develop/security-advisories",
+        params={"state": "published", "per_page": "100"},
+    ).respond(json=[
+        {
+            "ghsa_id": "GHSA-7hp8-65ch-5whp", "cve_id": "CVE-2026-87902", "severity": "critical",
+            "summary": "Unauthenticated path traversal", "description": "An unauthenticated attacker…",
+            "published_at": "2026-09-22T18:00:00Z", "withdrawn_at": None,
+            "html_url": "https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-7hp8-65ch-5whp",
+            "vulnerabilities": [
+                {"package": {"ecosystem": "other", "name": "WordPress"}, "patched_versions": "7.1.2"},
+                {"package": {"ecosystem": "other", "name": "WordPress"}, "patched_versions": "7.0.6, 6.9.10"},
+            ],
+        },
+        {
+            "ghsa_id": "GHSA-32m5-wc28-ghrr", "cve_id": None, "severity": "medium", "summary": "Comment reparenting",
+            "description": "", "published_at": "2026-09-18T18:00:00Z", "withdrawn_at": None,
+            "html_url": "https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-32m5-wc28-ghrr",
+            "vulnerabilities": [{"package": {"ecosystem": "other", "name": "WordPress"}, "patched_versions": None}],
+        },
+        {"ghsa_id": "GHSA-retiré", "withdrawn_at": "2026-01-01T00:00:00Z"},
+    ])
+    with httpx.Client() as client:
+        advisories = fetch_github_advisories("WordPress/wordpress-develop", client)
+    assert [a.identifier for a in advisories] == ["GHSA-7hp8-65ch-5whp", "GHSA-32m5-wc28-ghrr"]
+    critical, medium = advisories
+    assert critical.aliases == ["CVE-2026-87902"] and critical.severity == "critical"
+    assert critical.fixed_versions == ["6.9.10", "7.0.6", "7.1.2"]
+    assert medium.aliases == [] and medium.severity == "moderate" and medium.fixed_versions == []
+
+
+JOOMLA_ITEM = """<item>
+<title>{title}</title>
+<link>https://developer.joomla.org/security-centre/{article}-{number}-core-issue.html</link>
+<pubDate>Mon, 17 Aug 2026 14:00:10 +0000</pubDate>
+<description><![CDATA[<ul>
+<li><strong>Project:</strong> Joomla!</li>
+<li><strong>Severity: </strong>{severity}</li>
+<li><strong>Versions: </strong>1.0.0-5.4.7,6.0.0-6.1.2</li>
+<li><strong>CVE Number:</strong> <a href="https://www.cve.org/CVERecord?id=CVE-2026-73373">CVE-2026-73373</a></li>
+</ul>
+<h3>Description</h3>
+<div>The default list of dangerous files did not include <em>SHTML</em> files.</div>
+<h3>Solution</h3>
+<p>Upgrade to version 5.4.8, 6.1.3</p>
+<h3>Contact</h3>
+<p>The JSST at the Joomla! Security Centre 2.0.</p>]]></description>
+</item>"""
+
+
+def joomla_feed(*items):
+    return f'<?xml version="1.0"?><rss version="2.0"><channel>{"".join(items)}</channel></rss>'
+
+
+def joomla_item(number, article, title="Core - Unrestricted uploads", severity="Low"):
+    return JOOMLA_ITEM.format(title=f"[{number}] - {title}", number=number, article=article, severity=severity)
+
+
+@respx.mock
+def test_joomla_security_feed_fields_and_pagination():
+    route = respx.get("https://developer.joomla.org/security-centre.feed")
+    route.side_effect = [
+        httpx.Response(200, text=joomla_feed(
+            joomla_item("20260810", 1077), joomla_item("20100423", 311, severity="Medium High"),
+        )),
+        httpx.Response(200, text=joomla_feed(
+            joomla_item("20100423", 308), joomla_item("20131103", 400, title="Core XSS", severity=""),
+        )),
+        httpx.Response(200, text=joomla_feed()),
+    ]
+    with httpx.Client() as client:
+        advisories = fetch_joomla_advisories(client)
+    assert [a.identifier for a in advisories] == [
+        "JOOMLA-20260810", "JOOMLA-20100423", "JOOMLA-20100423-308", "JOOMLA-20131103",
+    ]
+    first = advisories[0]
+    assert first.title == "Core - Unrestricted uploads"
+    assert first.severity == "low" and first.aliases == ["CVE-2026-73373"]
+    assert first.fixed_versions == ["5.4.8", "6.1.3"]  # la section Contact est ignorée
+    assert first.details == "The default list of dangerous files did not include SHTML files."
+    assert first.url.endswith("/1077-20260810-core-issue.html") and first.published_at.day == 17
+    assert advisories[1].severity == "high" and advisories[3].severity == "unknown"
+    assert [dict(call.request.url.params)["limitstart"] for call in route.calls] == ["0", "2", "4"]
+
+
+@respx.mock
+def test_joomla_security_feed_stops_at_known_page():
+    route = respx.get("https://developer.joomla.org/security-centre.feed")
+    route.side_effect = [
+        httpx.Response(200, text=joomla_feed(joomla_item("20260810", 1077))),
+        httpx.Response(200, text=joomla_feed(joomla_item("20260701", 1070))),
+    ]
+    with httpx.Client() as client:
+        advisories = fetch_joomla_advisories(client, known={"JOOMLA-20260810"})
+    assert [a.identifier for a in advisories] == ["JOOMLA-20260810"] and route.call_count == 1
