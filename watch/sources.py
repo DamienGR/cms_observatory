@@ -63,13 +63,31 @@ def fetch_pypi_releases(package: str, client: httpx.Client) -> list[ReleaseData]
     return releases
 
 
+def expand_minified(entries: list[dict]) -> list[dict]:
+    """Format « p2 » minifié de Composer : chaque entrée ne contient que les clés qui
+    changent par rapport à la précédente ; « __unset » supprime une clé."""
+    expanded, previous = [], {}
+    for entry in entries:
+        current = dict(previous)
+        for key, value in entry.items():
+            if value == "__unset":
+                current.pop(key, None)
+            else:
+                current[key] = value
+        expanded.append(current)
+        previous = current
+    return expanded
+
+
 def fetch_packagist_releases(package: str, client: httpx.Client) -> list[ReleaseData]:
-    # Format « p2 » minifié : chaque entrée ne contient que les clés qui changent,
-    # mais « version » et « time » changent à chaque release.
     response = client.get(f"https://repo.packagist.org/p2/{package}.json")
     response.raise_for_status()
+    data = response.json()
+    entries = data["packages"][package]
+    if data.get("minified"):
+        entries = expand_minified(entries)
     releases = []
-    for entry in response.json()["packages"][package]:
+    for entry in entries:
         version, time = entry.get("version"), entry.get("time")
         if not version or not time:
             continue

@@ -3,6 +3,7 @@ import pytest
 import respx
 
 from watch.sources import (
+    expand_minified,
     fetch_github_releases,
     fetch_osv_advisories,
     fetch_packagist_releases,
@@ -37,6 +38,27 @@ def test_packagist_minified_format():
         releases = fetch_packagist_releases("drupal/core", client)
     assert [r.version for r in releases] == ["11.2.4", "11.2.3", "11.3.0-beta1"]
     assert releases[2].is_prerelease
+
+
+@respx.mock
+def test_packagist_minified_entries_inherit_unchanged_keys():
+    """Une release publiée à la même date que la précédente n'a pas de clé « time »."""
+    respx.get("https://repo.packagist.org/p2/roots/wordpress-no-content.json").respond(json={
+        "minified": "composer/2.0",
+        "packages": {"roots/wordpress-no-content": [
+            {"name": "roots/wordpress-no-content", "version": "7.1.2", "time": "2026-09-22T18:00:00+00:00"},
+            {"version": "7.0.6"},
+            {"version": "7.0.5", "time": "2026-09-17T18:00:00+00:00", "extra": "__unset"},
+        ]},
+    })
+    with httpx.Client() as client:
+        releases = fetch_packagist_releases("roots/wordpress-no-content", client)
+    assert [(r.version, r.published_at.day) for r in releases] == [("7.1.2", 22), ("7.0.6", 22), ("7.0.5", 17)]
+
+
+def test_expand_minified_unsets_keys():
+    entries = expand_minified([{"version": "1", "extra": {"a": 1}}, {"version": "2", "extra": "__unset"}])
+    assert entries == [{"version": "1", "extra": {"a": 1}}, {"version": "2"}]
 
 
 @respx.mock
