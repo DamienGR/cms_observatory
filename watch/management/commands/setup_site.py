@@ -7,46 +7,36 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from djangocms_versioning.models import Version
 
-# Contenu initial des deux pages, par langue. Les éditeurs le reprennent ensuite dans le CMS.
-HOME = {
-    "fr": {
-        "title": "Accueil",
-        "hero_title": "Les versions et failles des CMS, suivies pour vous",
-        "hero_subtitle": "Drupal, WordPress, Joomla, PrestaShop, Magento, django CMS et Wagtail : dernières releases et avis de "
-        "sécurité, collectés automatiquement plusieurs fois par jour.",
-        "sidebar_title": "<h2>Correctifs de sécurité</h2>",
-        "text": "<p>L'observatoire interroge PyPI, Packagist, GitHub et OSV.dev, puis résume chaque avis "
-        "de sécurité pour que vous sachiez en un coup d'œil s'il faut mettre à jour.</p><h2>Dernières releases</h2>",
-    },
-    "en": {
-        "title": "Home",
-        "hero_title": "CMS releases and vulnerabilities, tracked for you",
-        "hero_subtitle": "Drupal, WordPress, Joomla, PrestaShop, Magento, django CMS and Wagtail: latest releases and security "
-        "advisories, collected automatically several times a day.",
-        "sidebar_title": "<h2>Security fixes</h2>",
-        "text": "<p>The observatory queries PyPI, Packagist, GitHub and OSV.dev, then summarises each "
-        "security advisory so you know at a glance whether to upgrade.</p><h2>Latest releases</h2>",
-    },
-}
-WATCH = {"fr": ("Observatoire", "observatoire"), "en": ("Observatory", "observatory")}
+from watch.site_content import HOME, LEGAL, WATCH
 
 
 class Command(BaseCommand):
-    help = "Crée et publie les pages Accueil et Observatoire (FR et EN) d'un site vide."
+    help = (
+        "Crée et publie les pages Accueil et Observatoire (FR et EN) d'un site vide, "
+        "puis la page Mentions légales si elle manque."
+    )
 
     def add_arguments(self, parser):
         parser.add_argument("--user", help="Auteur des versions publiées (par défaut : premier superutilisateur)")
 
     def handle(self, *args, user=None, **options):
-        if Page.objects.exists():
-            self.stdout.write("Le site a déjà des pages : rien à faire.")
-            return
         author = self.get_author(user)
+        created = []
         with transaction.atomic():
-            home = self.create_home(author)
-            self.create_watch_page(author)
+            if not Page.objects.exists():
+                self.create_home(author)
+                self.create_watch_page(author)
+                created += ["Accueil", "Observatoire"]
+            # Pages ajoutées après la première version du site : créées aussi sur un site existant.
+            for reverse_id, copy, in_navigation in (("legal-notice", LEGAL, False),):
+                if not Page.objects.filter(reverse_id=reverse_id).exists():
+                    self.create_text_page(author, reverse_id, copy, in_navigation)
+                    created.append(copy["fr"]["title"])
+        if not created:
+            self.stdout.write("Toutes les pages existent déjà : rien à faire.")
+            return
         reload_urlconf()
-        self.stdout.write(self.style.SUCCESS(f"Pages créées et publiées (accueil : {home.get_absolute_url('fr')})."))
+        self.stdout.write(self.style.SUCCESS(f"Pages créées et publiées : {', '.join(created)}."))
 
     def get_author(self, username):
         users = get_user_model().objects
@@ -85,6 +75,21 @@ class Command(BaseCommand):
         create_page_content("en", title, page, slug=slug, created_by=author, in_navigation=True)
         for language in WATCH:
             self.publish(page.get_admin_content(language), author)
+        return page
+
+    def create_text_page(self, author, reverse_id, copy, in_navigation):
+        page = create_page(
+            copy["fr"]["title"], "page.html", "fr", slug=copy["fr"]["slug"], created_by=author,
+            in_navigation=in_navigation, reverse_id=reverse_id,
+        )
+        create_page_content(
+            "en", copy["en"]["title"], page, slug=copy["en"]["slug"], created_by=author, in_navigation=in_navigation,
+        )
+        for language, text in copy.items():
+            content = page.get_admin_content(language)
+            main = get_placeholder_from_slot(content.placeholders, "content")
+            add_plugin(main, "TextPlugin", language, body=text["body"])
+            self.publish(content, author)
         return page
 
     @staticmethod

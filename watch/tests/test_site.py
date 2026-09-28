@@ -61,11 +61,20 @@ def test_board_keeps_worst_severity_per_month(technology):
 
 def test_setup_site_creates_published_pages(client, admin_user):
     call_command("setup_site")
-    assert Page.objects.count() == 2
+    assert Page.objects.count() == 3
     response = client.get("/fr/")
     assert response.status_code == 200 and "Les versions et failles des CMS".encode() in response.content
     home_en = client.get("/en/").content
     assert b"CMS releases and vulnerabilities" in home_en and b'href="/en/observatory/"' in home_en
     assert client.get("/en/observatory/").status_code == 200
     call_command("setup_site")  # idempotente
-    assert Page.objects.count() == 2
+    assert Page.objects.count() == 3
+
+
+def test_setup_site_adds_legal_page_to_existing_site(client, watch_page):
+    call_command("setup_site")
+    assert Page.objects.count() == 2  # la page d'accueil n'est pas recréée
+    legal = client.get("/fr/mentions-legales/").content.decode()
+    assert "510 717 523" in legal and "OVH SAS" in legal
+    assert 'href="/fr/mentions-legales/"' in legal  # pied de page
+    assert "Legal notice" in client.get("/en/legal-notice/").content.decode()

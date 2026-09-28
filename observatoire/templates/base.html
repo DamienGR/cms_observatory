@@ -76,7 +76,11 @@
       </div>
       <div class="obs-footer-bottom">
         {% static_alias "footer" %}
-        <p class="mb-0">© {% now "Y" %} Observatoire des CMS</p>
+        <div class="obs-footer-legal">
+          <p class="mb-0">© {% now "Y" %} Observatoire des CMS</p>
+          {% page_url "legal-notice" as legal_url %}
+          {% if legal_url %}<a href="{{ legal_url }}">{% translate "Mentions légales" %}</a>{% endif %}
+        </div>
       </div>
     </div>
   </footer>

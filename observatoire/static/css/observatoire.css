@@ -426,6 +426,12 @@ a:hover { text-decoration-thickness: 2px; }
   border-top: 1px solid rgba(255, 255, 255, .15);
   font-size: .875rem;
 }
+.obs-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.5rem;
+}
+.obs-footer-legal > :last-child { margin-inline-start: auto; }
 
 /* --- Pages système (erreurs, accueil vide) -------------------------------- */
 .obs-system {

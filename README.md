@@ -12,14 +12,15 @@ uv pip install pip -r requirements-dev.txt
 python manage.py migrate
 python manage.py loaddata technologies
 python manage.py createsuperuser
-python manage.py setup_site  # pages Accueil et Observatoire (FR/EN), publiées
+python manage.py setup_site  # pages Accueil, Observatoire, Mentions légales (FR/EN)
 export COPILOT_PROVIDER=djangocms_ai_copilot.providers.fake.FakeProvider  # sans clé API
 python manage.py runserver
 ```
 
 `setup_site` crée la page « Accueil » (gabarit Accueil, page d'accueil) et la page
-« Observatoire » (application « Observatoire », espace de noms `watch`), puis les publie.
-Elle ne fait rien si le site a déjà des pages.
+« Observatoire » (application « Observatoire », espace de noms `watch`) sur un site vide,
+puis la page « Mentions légales » (`reverse_id` `legal-notice`, liée depuis le pied de page)
+si elle manque, et les publie. Relancée, elle ne fait rien.
 Lancez la collecte depuis le menu « Observatoire » de la toolbar ou avec
 `python manage.py collect_watch`.
 
