@@ -1,6 +1,6 @@
 [
   {"model": "watch.technology", "fields": {"name": "django CMS", "slug": "django-cms", "website": "https://www.django-cms.org/", "registry": "pypi", "package": "django-cms", "is_tracked": true}},
   {"model": "watch.technology", "fields": {"name": "Drupal", "slug": "drupal", "website": "https://www.drupal.org/", "registry": "packagist", "package": "drupal/core", "is_tracked": true}},
-  {"model": "watch.technology", "fields": {"name": "WordPress", "slug": "wordpress", "website": "https://wordpress.org/", "registry": "packagist", "package": "roots/wordpress-no-content", "is_tracked": true}},
+  {"model": "watch.technology", "fields": {"name": "WordPress", "slug": "wordpress", "website": "https://wordpress.org/", "registry": "packagist", "package": "roots/wordpress-no-content", "is_tracked": true, "advisory_sources": [{"source": "github", "repository": "WordPress/wordpress-develop"}, {"source": "osv", "ecosystem": "Bitnami", "package": "wordpress"}]}},
   {"model": "watch.technology", "fields": {"name": "Wagtail", "slug": "wagtail", "website": "https://wagtail.org/", "registry": "pypi", "package": "wagtail", "is_tracked": true}}
 ]

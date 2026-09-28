@@ -4,7 +4,31 @@ from django.db import transaction
 from django.utils import timezone
 
 from .models import Advisory, Release, Technology
-from .sources import RELEASE_FETCHERS, fetch_osv_advisories, http_client
+from .sources import RELEASE_FETCHERS, AdvisoryData, fetch_advisories, http_client
+
+
+def cve_ids(identifier, aliases):
+    return {name for name in (identifier, *aliases) if name.startswith("CVE-")}
+
+
+def deduplicate(advisories: list[AdvisoryData], existing) -> list[AdvisoryData]:
+    """Un même CVE peut venir de plusieurs sources : chaque CVE reste à l'avis déjà
+    enregistré qui le cite, sinon au premier avis collecté (ordre des sources)."""
+    owners = {}
+    for identifier, aliases in existing:
+        for cve in cve_ids(identifier, aliases):
+            owners.setdefault(cve, identifier)
+    kept, seen = [], set()
+    for advisory in advisories:
+        cves = cve_ids(advisory.identifier, advisory.aliases)
+        taken = any(owners.get(cve, advisory.identifier) != advisory.identifier for cve in cves)
+        if taken or advisory.identifier in seen:
+            continue
+        for cve in cves:
+            owners[cve] = advisory.identifier
+        seen.add(advisory.identifier)
+        kept.append(advisory)
+    return kept
 
 
 @dataclass
@@ -20,12 +44,17 @@ class CollectReport:
 
 def collect_technology(technology: Technology) -> CollectReport:
     """Récupère releases et avis, puis les enregistre en deux requêtes groupées (upsert)."""
+    known = set(technology.advisories.values_list("identifier", flat=True))
     with http_client() as client:
         releases = RELEASE_FETCHERS[technology.registry](technology.package, client)
-        advisories = fetch_osv_advisories(technology.osv_ecosystem, technology.package, client)
+        collected = [
+            advisory
+            for source in technology.get_advisory_sources()
+            for advisory in fetch_advisories(source, client, known)
+        ]
+    advisories = deduplicate(collected, technology.advisories.values_list("identifier", "aliases"))
 
     fixed_versions = {version for advisory in advisories for version in advisory.fixed_versions}
-    known = set(technology.advisories.values_list("identifier", flat=True))
 
     with transaction.atomic():
         Release.objects.bulk_create(

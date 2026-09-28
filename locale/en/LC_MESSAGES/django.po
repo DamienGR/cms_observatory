@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: observatoire-cms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 22:07+0200\n"
+"POT-Creation-Date: 2026-09-28 22:34+0200\n"
 "PO-Revision-Date: 2026-09-28 22:10+0200\n"
 "Last-Translator: Damien Gros <contact@dg-tech.dev>\n"
 "Language-Team: English\n"
@@ -13,23 +13,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: observatoire/settings.py:136 observatoire/settings.py:146
+#: observatoire/settings.py:136 observatoire/settings.py:147
 msgid "Français"
 msgstr "Français"
 
-#: observatoire/settings.py:136 observatoire/settings.py:147
+#: observatoire/settings.py:136 observatoire/settings.py:148
 msgid "English"
 msgstr "English"
 
-#: observatoire/settings.py:158
+#: observatoire/settings.py:159
 msgid "Standard"
 msgstr "Standard"
 
-#: observatoire/settings.py:159
+#: observatoire/settings.py:160
 msgid "Accueil"
 msgstr "Home"
 
-#: observatoire/settings.py:165
+#: observatoire/settings.py:166
 msgid "Bandeau"
 msgstr "Banner"
 
@@ -124,11 +124,11 @@ msgstr "About"
 msgid "Sources"
 msgstr "Sources"
 
-#: observatoire/templates/base.html:84
+#: observatoire/templates/base.html:86
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: observatoire/templates/base.html:85
+#: observatoire/templates/base.html:87
 #, python-format
 msgid "Service fourni par %(link)s"
 msgstr "Service provided by %(link)s"
@@ -196,7 +196,7 @@ msgstr "Collect the selected technologies"
 msgid "%d collecte(s) mise(s) en file."
 msgstr "%d collection(s) queued."
 
-#: watch/admin.py:71 watch/models.py:131
+#: watch/admin.py:71 watch/models.py:143
 msgid "résumé IA"
 msgstr "AI summary"
 
@@ -301,132 +301,149 @@ msgstr ""
 msgid "collecte active"
 msgstr "collection enabled"
 
-#: watch/models.py:31
+#: watch/models.py:32
+msgid "sources des avis"
+msgstr "advisory sources"
+
+#: watch/models.py:34
+msgid ""
+"Vide = base OSV du paquet. Sinon, liste par ordre de priorité : {\"source\":"
+" \"osv\", \"ecosystem\": \"Bitnami\", \"package\": \"wordpress\"}, "
+"{\"source\": \"github\", \"repository\": \"WordPress/wordpress-develop\"} ou"
+" {\"source\": \"joomla\"}."
+msgstr ""
+"Empty = the package in the OSV database. Otherwise, a list in order of "
+"priority: {\"source\": \"osv\", \"ecosystem\": \"Bitnami\", \"package\": "
+"\"wordpress\"}, {\"source\": \"github\", \"repository\": "
+"\"WordPress/wordpress-develop\"} or {\"source\": \"joomla\"}."
+
+#: watch/models.py:39
 msgid "dernière collecte"
 msgstr "last collected"
 
-#: watch/models.py:35
+#: watch/models.py:43
 msgid "technologie"
 msgstr "technology"
 
-#: watch/models.py:36
+#: watch/models.py:44
 msgid "technologies"
 msgstr "technologies"
 
-#: watch/models.py:62
+#: watch/models.py:74
 msgid "langue"
 msgstr "language"
 
-#: watch/models.py:63
+#: watch/models.py:75
 msgid "accroche"
 msgstr "tagline"
 
-#: watch/models.py:64
+#: watch/models.py:76
 msgid "notre avis"
 msgstr "our verdict"
 
-#: watch/models.py:78
+#: watch/models.py:90
 msgid "fiche technologie"
 msgstr "technology profile"
 
-#: watch/models.py:79
+#: watch/models.py:91
 msgid "fiches technologie"
 msgstr "technology profiles"
 
-#: watch/models.py:98
+#: watch/models.py:110
 msgid "publiée le"
 msgstr "published on"
 
-#: watch/models.py:100
+#: watch/models.py:112
 msgid "pré-version"
 msgstr "pre-release"
 
-#: watch/models.py:101
+#: watch/models.py:113
 msgid "corrige une faille"
 msgstr "fixes a vulnerability"
 
-#: watch/models.py:108
+#: watch/models.py:120
 msgid "release"
 msgstr "release"
 
-#: watch/models.py:116 watch/templates/watch/dashboard.html:39
+#: watch/models.py:128 watch/templates/watch/dashboard.html:39
 msgid "faible"
 msgstr "low"
 
-#: watch/models.py:117 watch/templates/watch/dashboard.html:38
+#: watch/models.py:129 watch/templates/watch/dashboard.html:38
 msgid "modérée"
 msgstr "moderate"
 
-#: watch/models.py:118 watch/templates/watch/dashboard.html:37
+#: watch/models.py:130 watch/templates/watch/dashboard.html:37
 msgid "élevée"
 msgstr "high"
 
-#: watch/models.py:119 watch/templates/watch/dashboard.html:36
+#: watch/models.py:131 watch/templates/watch/dashboard.html:36
 msgid "critique"
 msgstr "critical"
 
-#: watch/models.py:120
+#: watch/models.py:132
 msgid "inconnue"
 msgstr "unknown"
 
-#: watch/models.py:123
+#: watch/models.py:135
 msgid "identifiant"
 msgstr "identifier"
 
-#: watch/models.py:125 watch/models.py:161
+#: watch/models.py:137 watch/models.py:173
 msgid "titre"
 msgstr "title"
 
-#: watch/models.py:128
+#: watch/models.py:140
 msgid "publié le"
 msgstr "published on"
 
-#: watch/models.py:129
+#: watch/models.py:141
 msgid "versions correctives"
 msgstr "fixed versions"
 
-#: watch/models.py:138 watch/models.py:139
+#: watch/models.py:150 watch/models.py:151
 msgid "avis de sécurité"
 msgstr "security advisory"
 
-#: watch/models.py:151
+#: watch/models.py:163
 msgid "Vide = toutes les technologies"
 msgstr "Empty = all technologies"
 
-#: watch/models.py:153
+#: watch/models.py:165
 msgid "nombre"
 msgstr "count"
 
-#: watch/models.py:154
+#: watch/models.py:166
 msgid "seulement les correctifs de sécurité"
 msgstr "security fixes only"
 
-#: watch/models.py:157
+#: watch/models.py:169
 msgid "toutes"
 msgstr "all"
 
-#: watch/models.py:169
+#: watch/models.py:181
 msgid "note /5"
 msgstr "score /5"
 
-#: watch/models.py:170
+#: watch/models.py:182
 msgid "points forts"
 msgstr "strengths"
 
-#: watch/models.py:171
+#: watch/models.py:183
 msgid "points faibles"
 msgstr "weaknesses"
 
-#: watch/models.py:188
+#: watch/models.py:200
 msgid "technologie de la page"
 msgstr "page technology"
 
 #: watch/templates/watch/advisory_list.html:6
 msgid ""
-"Toutes les failles publiées sur OSV.dev pour les CMS suivis, de la plus "
-"récente à la plus ancienne."
+"Toutes les failles publiées pour les CMS suivis, par leurs équipes de "
+"sécurité ou sur OSV.dev, de la plus récente à la plus ancienne."
 msgstr ""
-"Every vulnerability published on OSV.dev for the tracked CMSs, newest first."
+"Every vulnerability published for the tracked CMSs, by their security teams "
+"or on OSV.dev, newest first."
 
 #: watch/templates/watch/advisory_list.html:11
 msgid "Technologie"

@@ -28,6 +28,10 @@ Les releases viennent de PyPI, de Packagist ou des publications GitHub (Joomla, 
 Packagist) ; les avis de sécurité, d'OSV.dev. Joomla, PrestaShop et Magento sont ajoutés
 par la migration `watch.0003`.
 
+Une technologie peut combiner plusieurs sources d'avis (champ « sources des avis » dans
+l'admin), dédoublonnées par CVE. WordPress lit les avis GitHub de `WordPress/wordpress-develop`
+puis OSV/Bitnami ; Joomla lit le flux du Joomla! Security Centre puis OSV/Packagist.
+
 ## Interface
 
 Thème maison par-dessus Bootstrap 5.3 (conservé pour les plugins djangocms-frontend),

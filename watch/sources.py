@@ -264,6 +264,18 @@ def _parse_joomla_item(item) -> AdvisoryData | None:
     )
 
 
+def fetch_advisories(source: dict, client: httpx.Client, known=frozenset()) -> list[AdvisoryData]:
+    """Avis d'une source configurée sur la technologie (voir Technology.advisory_sources)."""
+    match source:
+        case {"source": "osv", "ecosystem": ecosystem, "package": package}:
+            return fetch_osv_advisories(ecosystem, package, client)
+        case {"source": "github", "repository": repository}:
+            return fetch_github_advisories(repository, client)
+        case {"source": "joomla"}:
+            return fetch_joomla_advisories(client, known)
+    raise ValueError(f"Source d'avis inconnue : {source!r}")
+
+
 RELEASE_FETCHERS = {
     "pypi": fetch_pypi_releases,
     "packagist": fetch_packagist_releases,

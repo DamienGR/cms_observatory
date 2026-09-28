@@ -52,7 +52,8 @@ bases de vulnérabilités. L'observatoire les collecte pour vous et répond à t
 qui doit choisir un CMS ou garder ses sites à jour.</p>
 <h2>D'où viennent les données ?</h2>
 <p>Les versions proviennent des registres officiels (PyPI, Packagist) ou des publications GitHub des
-projets. Les avis de sécurité proviennent de la base ouverte <a href="https://osv.dev/">OSV.dev</a>.
+projets. Les avis de sécurité proviennent des équipes de sécurité des projets quand elles les publient
+(WordPress, Joomla) et de la base ouverte <a href="https://osv.dev/">OSV.dev</a>.
 La collecte est automatique et a lieu plusieurs fois par jour. Chaque avis renvoie vers sa source.</p>
 <h2>Limites</h2>
 <p>L'observatoire ne remplace pas les annonces de sécurité officielles de chaque projet : un avis peut
@@ -80,7 +81,8 @@ vulnerability databases. The observatory collects it for you and answers three q
 or keep their sites up to date.</p>
 <h2>Where does the data come from?</h2>
 <p>Releases come from the official registries (PyPI, Packagist) or from the projects' GitHub releases.
-Security advisories come from the open <a href="https://osv.dev/">OSV.dev</a> database. Collection is
+Security advisories come from the projects' own security teams where they publish them (WordPress,
+Joomla) and from the open <a href="https://osv.dev/">OSV.dev</a> database. Collection is
 automatic and runs several times a day. Every advisory links back to its source.</p>
 <h2>Limitations</h2>
 <p>The observatory does not replace each project's official security announcements: an advisory may

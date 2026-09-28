@@ -28,6 +28,14 @@ class Technology(models.Model):
         help_text=_("Ex. django-cms (PyPI), drupal/core (Packagist) ou joomla/joomla-cms (dépôt GitHub)"),
     )
     is_tracked = models.BooleanField(_("collecte active"), default=True)
+    advisory_sources = models.JSONField(
+        _("sources des avis"), default=list, blank=True,
+        help_text=_(
+            "Vide = base OSV du paquet. Sinon, liste par ordre de priorité : "
+            '{"source": "osv", "ecosystem": "Bitnami", "package": "wordpress"}, '
+            '{"source": "github", "repository": "WordPress/wordpress-develop"} ou {"source": "joomla"}.'
+        ),
+    )
     last_collected_at = models.DateTimeField(_("dernière collecte"), null=True, blank=True)
 
     class Meta:
@@ -37,6 +45,9 @@ class Technology(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_advisory_sources(self):
+        return self.advisory_sources or [{"source": "osv", "ecosystem": self.osv_ecosystem, "package": self.package}]
 
     @property
     def osv_ecosystem(self):

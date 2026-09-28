@@ -18,7 +18,7 @@ class TechnologyAdmin(GrouperModelAdmin):
     list_display = ("name", "content__tagline", "registry", "package", "last_collected_at", "admin_list_actions")
     list_display_links = None
     fields = (
-        "name", "slug", "registry", "package", "website", "is_tracked",
+        "name", "slug", "registry", "package", "website", "is_tracked", "advisory_sources",
         "content__tagline", "content__verdict", "content__language",
     )
     prepopulated_fields = {"slug": ("name",)}
