@@ -134,6 +134,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # --- Langues -----------------------------------------------------------------
 LANGUAGE_CODE = "fr"
 LANGUAGES = [("fr", _("Français")), ("en", _("English"))]
+# Chaînes source en français ; traduction anglaise dans locale/en (makemessages -l en).
+LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "Europe/Paris"
 USE_I18N = True
 USE_TZ = True

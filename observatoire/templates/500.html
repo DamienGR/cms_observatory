@@ -1,10 +1,10 @@
-<!doctype html>{% load static %}
-<html lang="fr">
+<!doctype html>{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Erreur du serveur · Observatoire des CMS</title>
+  <title>{% translate "Erreur du serveur" %} · Observatoire des CMS</title>
   <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
   <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/observatoire.css' %}">
@@ -15,9 +15,9 @@
   </div></header>
   <main class="obs-main"><div class="container"><div class="obs-system">
     <p class="obs-system-code" aria-hidden="true">500</p>
-    <h1>Le site a rencontré une erreur</h1>
-    <p class="lead">L'incident est enregistré. Réessayez dans quelques minutes.</p>
-    <p><a class="btn btn-primary" href="/">Retour à l'accueil</a></p>
+    <h1>{% translate "Le site a rencontré une erreur" %}</h1>
+    <p class="lead">{% translate "L'incident est enregistré. Réessayez dans quelques minutes." %}</p>
+    <p><a class="btn btn-primary" href="/">{% translate "Retour à l'accueil" %}</a></p>
   </div></div></main>
 </body>
 </html>

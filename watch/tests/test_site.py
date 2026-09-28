@@ -3,7 +3,7 @@ from datetime import date, datetime
 from cms.models import Page
 from django.core.management import call_command
 from django.template.loader import render_to_string
-from django.utils import timezone
+from django.utils import timezone, translation
 
 from watch.board import build_board, month_starts
 from watch.models import Advisory
@@ -84,3 +84,12 @@ def test_setup_site_adds_about_and_legal_pages_to_existing_site(client, watch_pa
     assert 'href="https://dg-tech.dev/"' in about
     assert 'href="/fr/a-propos/"' in about
     assert b'href="/en/about/"' in client.get("/en/about/").content
+
+
+def test_english_interface_is_translated(client, watch_page):
+    call_command("setup_site")
+    content = client.get("/en/about/").content.decode()
+    assert "Skip to content" in content and "Legal notice" in content and "Service provided by" in content
+    assert "Aller au contenu" not in content
+    with translation.override("en"):
+        assert "Server error" in render_to_string("500.html")

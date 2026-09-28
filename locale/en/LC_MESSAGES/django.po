@@ -1,0 +1,670 @@
+# Traduction anglaise de l'Observatoire des CMS.
+msgid ""
+msgstr ""
+"Project-Id-Version: observatoire-cms\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-28 22:07+0200\n"
+"PO-Revision-Date: 2026-09-28 22:10+0200\n"
+"Last-Translator: Damien Gros <contact@dg-tech.dev>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: observatoire/settings.py:136 observatoire/settings.py:146
+msgid "Français"
+msgstr "Français"
+
+#: observatoire/settings.py:136 observatoire/settings.py:147
+msgid "English"
+msgstr "English"
+
+#: observatoire/settings.py:158
+msgid "Standard"
+msgstr "Standard"
+
+#: observatoire/settings.py:159
+msgid "Accueil"
+msgstr "Home"
+
+#: observatoire/settings.py:165
+msgid "Bandeau"
+msgstr "Banner"
+
+#: observatoire/templates/400.html:7
+msgid "Requête invalide"
+msgstr "Bad request"
+
+#: observatoire/templates/400.html:18
+msgid "Cette requête n'a pas pu être traitée"
+msgstr "This request could not be processed"
+
+#: observatoire/templates/400.html:19
+msgid "Vérifiez l'adresse, puis réessayez."
+msgstr "Check the address, then try again."
+
+#: observatoire/templates/400.html:20 observatoire/templates/403.html:9
+#: observatoire/templates/404.html:9 observatoire/templates/500.html:20
+msgid "Retour à l'accueil"
+msgstr "Back to home"
+
+#: observatoire/templates/403.html:2
+msgid "Accès refusé"
+msgstr "Access denied"
+
+#: observatoire/templates/403.html:7
+msgid "Vous n'avez pas accès à cette page"
+msgstr "You do not have access to this page"
+
+#: observatoire/templates/403.html:8
+msgid "Connectez-vous avec un compte autorisé, ou revenez à l'accueil."
+msgstr "Log in with an authorised account, or go back to the home page."
+
+#: observatoire/templates/404.html:2
+msgid "Page introuvable"
+msgstr "Page not found"
+
+#: observatoire/templates/404.html:7
+msgid "Cette page n'existe pas"
+msgstr "This page does not exist"
+
+#: observatoire/templates/404.html:8
+msgid "L'adresse est peut-être mal saisie, ou la page a été déplacée."
+msgstr "The address may be mistyped, or the page may have moved."
+
+#: observatoire/templates/500.html:7
+msgid "Erreur du serveur"
+msgstr "Server error"
+
+#: observatoire/templates/500.html:18
+msgid "Le site a rencontré une erreur"
+msgstr "The site ran into an error"
+
+#: observatoire/templates/500.html:19
+msgid "L'incident est enregistré. Réessayez dans quelques minutes."
+msgstr "The incident has been logged. Please try again in a few minutes."
+
+#: observatoire/templates/base.html:23
+msgid "Aller au contenu"
+msgstr "Skip to content"
+
+#: observatoire/templates/base.html:25
+msgid "Navigation principale"
+msgstr "Main navigation"
+
+#: observatoire/templates/base.html:31
+msgid "Ouvrir le menu"
+msgstr "Open menu"
+
+#: observatoire/templates/base.html:59
+msgid ""
+"Versions et avis de sécurité de Drupal, WordPress, Joomla, PrestaShop, "
+"Magento, django CMS et Wagtail, collectés automatiquement plusieurs fois par"
+" jour."
+msgstr ""
+"Releases and security advisories for Drupal, WordPress, Joomla, PrestaShop, "
+"Magento, django CMS and Wagtail, collected automatically several times a "
+"day."
+
+#: observatoire/templates/base.html:62
+msgid "Suivre"
+msgstr "Follow"
+
+#: observatoire/templates/base.html:65
+msgid "Flux RSS des avis"
+msgstr "Advisories RSS feed"
+
+#: observatoire/templates/base.html:67
+msgid "À propos"
+msgstr "About"
+
+#: observatoire/templates/base.html:71
+msgid "Sources"
+msgstr "Sources"
+
+#: observatoire/templates/base.html:84
+msgid "Mentions légales"
+msgstr "Legal notice"
+
+#: observatoire/templates/base.html:85
+#, python-format
+msgid "Service fourni par %(link)s"
+msgstr "Service provided by %(link)s"
+
+#: observatoire/templates/cms/noapphook.html:5
+msgid "Pas d'aperçu pour cette page"
+msgstr "No preview for this page"
+
+#: observatoire/templates/cms/noapphook.html:6
+msgid ""
+"L'application rattachée à cette page ne fournit pas de contenu à sa racine."
+msgstr ""
+"The application attached to this page provides no content at its root."
+
+#: observatoire/templates/cms/noapphook.html:7
+msgid "Elle redirige vers :"
+msgstr "It redirects to:"
+
+#: observatoire/templates/cms/welcome.html:11
+msgid "Le site n'a pas encore de page"
+msgstr "The site has no pages yet"
+
+#: observatoire/templates/cms/welcome.html:12
+msgid ""
+"Créez les pages d'accueil et de l'observatoire en une commande, ou ajoutez "
+"une première page à la main."
+msgstr ""
+"Create the home and observatory pages with a single command, or add a first "
+"page by hand."
+
+#: observatoire/templates/cms/welcome.html:14
+msgid "Ajouter une page"
+msgstr "Add a page"
+
+#: observatoire/templates/cms/welcome.html:17
+msgid "Nouvelle page"
+msgstr "New page"
+
+#: observatoire/templates/cms/welcome.html:20
+msgid "L'observatoire ouvre bientôt"
+msgstr "The observatory opens soon"
+
+#: observatoire/templates/cms/welcome.html:21
+msgid ""
+"Nous préparons le suivi des versions et des failles de sécurité des "
+"principaux CMS. Revenez dans quelques jours."
+msgstr ""
+"We are getting ready to track releases and security vulnerabilities of the "
+"major CMSs. Come back in a few days."
+
+#: observatoire/urls.py:14 observatoire/urls.py:15
+msgid "Observatoire des CMS"
+msgstr "Observatoire des CMS"
+
+#: observatoire/urls.py:16
+msgid "Administration"
+msgstr "Administration"
+
+#: watch/admin.py:33
+msgid "Collecter les technologies sélectionnées"
+msgstr "Collect the selected technologies"
+
+#: watch/admin.py:37
+#, python-format
+msgid "%d collecte(s) mise(s) en file."
+msgstr "%d collection(s) queued."
+
+#: watch/admin.py:71 watch/models.py:131
+msgid "résumé IA"
+msgstr "AI summary"
+
+#: watch/apps.py:8 watch/cms_apps.py:10 watch/cms_plugins.py:15
+#: watch/cms_plugins.py:36 watch/cms_plugins.py:46 watch/cms_plugins.py:55
+#: watch/cms_toolbars.py:16 watch/templates/watch/cms_components/hero.html:2
+msgid "Observatoire"
+msgstr "Observatory"
+
+#: watch/cms_menus.py:17
+msgid "Technologies suivies"
+msgstr "Tracked technologies"
+
+#: watch/cms_plugins.py:14 watch/templates/watch/dashboard.html:53
+msgid "Dernières releases"
+msgstr "Latest releases"
+
+#: watch/cms_plugins.py:35
+msgid "Comparatif"
+msgstr "Comparison"
+
+#: watch/cms_plugins.py:45
+msgid "Colonne de comparatif"
+msgstr "Comparison column"
+
+#: watch/cms_plugins.py:54
+msgid "Chiffres clés"
+msgstr "Key figures"
+
+#: watch/cms_toolbars.py:17
+msgid "Technologies"
+msgstr "Technologies"
+
+#: watch/cms_toolbars.py:18 watch/templates/watch/technology_detail.html:26
+msgid "Releases"
+msgstr "Releases"
+
+#: watch/cms_toolbars.py:19 watch/templates/watch/advisory_list.html:2
+#: watch/templates/watch/advisory_list.html:5
+#: watch/templates/watch/dashboard.html:78
+#: watch/templates/watch/technology_detail.html:36
+msgid "Avis de sécurité"
+msgstr "Security advisories"
+
+#: watch/cms_toolbars.py:23
+msgid "Lancer la collecte"
+msgstr "Run collection"
+
+#: watch/cms_toolbars.py:25
+msgid "Collecter maintenant les releases et les avis de sécurité ?"
+msgstr "Collect releases and security advisories now?"
+
+#: watch/cms_toolbars.py:40
+msgid "Technologie de la page"
+msgstr "Page technology"
+
+#: watch/cms_wizards.py:10
+msgid "Accroche"
+msgstr "Tagline"
+
+#: watch/cms_wizards.py:34
+msgid "Nouvelle fiche technologie"
+msgstr "New technology profile"
+
+#: watch/cms_wizards.py:38
+msgid "Suivre un nouveau CMS ou framework et rédiger sa fiche."
+msgstr "Track a new CMS or framework and write its profile."
+
+#: watch/feeds.py:9
+msgid "Observatoire des CMS — avis de sécurité"
+msgstr "Observatoire des CMS — security advisories"
+
+#: watch/feeds.py:10
+msgid "Les derniers avis de sécurité des CMS suivis, résumés."
+msgstr "The latest security advisories for the tracked CMSs, summarised."
+
+#: watch/models.py:22
+msgid "nom"
+msgstr "name"
+
+#: watch/models.py:24
+msgid "site officiel"
+msgstr "official website"
+
+#: watch/models.py:25
+msgid "registre"
+msgstr "registry"
+
+#: watch/models.py:27
+msgid "paquet"
+msgstr "package"
+
+#: watch/models.py:28
+msgid ""
+"Ex. django-cms (PyPI), drupal/core (Packagist) ou joomla/joomla-cms (dépôt "
+"GitHub)"
+msgstr ""
+"E.g. django-cms (PyPI), drupal/core (Packagist) or joomla/joomla-cms (GitHub"
+" repository)"
+
+#: watch/models.py:30
+msgid "collecte active"
+msgstr "collection enabled"
+
+#: watch/models.py:31
+msgid "dernière collecte"
+msgstr "last collected"
+
+#: watch/models.py:35
+msgid "technologie"
+msgstr "technology"
+
+#: watch/models.py:36
+msgid "technologies"
+msgstr "technologies"
+
+#: watch/models.py:62
+msgid "langue"
+msgstr "language"
+
+#: watch/models.py:63
+msgid "accroche"
+msgstr "tagline"
+
+#: watch/models.py:64
+msgid "notre avis"
+msgstr "our verdict"
+
+#: watch/models.py:78
+msgid "fiche technologie"
+msgstr "technology profile"
+
+#: watch/models.py:79
+msgid "fiches technologie"
+msgstr "technology profiles"
+
+#: watch/models.py:98
+msgid "publiée le"
+msgstr "published on"
+
+#: watch/models.py:100
+msgid "pré-version"
+msgstr "pre-release"
+
+#: watch/models.py:101
+msgid "corrige une faille"
+msgstr "fixes a vulnerability"
+
+#: watch/models.py:108
+msgid "release"
+msgstr "release"
+
+#: watch/models.py:116 watch/templates/watch/dashboard.html:39
+msgid "faible"
+msgstr "low"
+
+#: watch/models.py:117 watch/templates/watch/dashboard.html:38
+msgid "modérée"
+msgstr "moderate"
+
+#: watch/models.py:118 watch/templates/watch/dashboard.html:37
+msgid "élevée"
+msgstr "high"
+
+#: watch/models.py:119 watch/templates/watch/dashboard.html:36
+msgid "critique"
+msgstr "critical"
+
+#: watch/models.py:120
+msgid "inconnue"
+msgstr "unknown"
+
+#: watch/models.py:123
+msgid "identifiant"
+msgstr "identifier"
+
+#: watch/models.py:125 watch/models.py:161
+msgid "titre"
+msgstr "title"
+
+#: watch/models.py:128
+msgid "publié le"
+msgstr "published on"
+
+#: watch/models.py:129
+msgid "versions correctives"
+msgstr "fixed versions"
+
+#: watch/models.py:138 watch/models.py:139
+msgid "avis de sécurité"
+msgstr "security advisory"
+
+#: watch/models.py:151
+msgid "Vide = toutes les technologies"
+msgstr "Empty = all technologies"
+
+#: watch/models.py:153
+msgid "nombre"
+msgstr "count"
+
+#: watch/models.py:154
+msgid "seulement les correctifs de sécurité"
+msgstr "security fixes only"
+
+#: watch/models.py:157
+msgid "toutes"
+msgstr "all"
+
+#: watch/models.py:169
+msgid "note /5"
+msgstr "score /5"
+
+#: watch/models.py:170
+msgid "points forts"
+msgstr "strengths"
+
+#: watch/models.py:171
+msgid "points faibles"
+msgstr "weaknesses"
+
+#: watch/models.py:188
+msgid "technologie de la page"
+msgstr "page technology"
+
+#: watch/templates/watch/advisory_list.html:6
+msgid ""
+"Toutes les failles publiées sur OSV.dev pour les CMS suivis, de la plus "
+"récente à la plus ancienne."
+msgstr ""
+"Every vulnerability published on OSV.dev for the tracked CMSs, newest first."
+
+#: watch/templates/watch/advisory_list.html:11
+msgid "Technologie"
+msgstr "Technology"
+
+#: watch/templates/watch/advisory_list.html:13
+#: watch/templates/watch/advisory_list.html:20
+msgid "Toutes"
+msgstr "All"
+
+#: watch/templates/watch/advisory_list.html:18
+msgid "Sévérité"
+msgstr "Severity"
+
+#: watch/templates/watch/advisory_list.html:24
+msgid "Filtrer"
+msgstr "Filter"
+
+#: watch/templates/watch/advisory_list.html:25
+msgid "Réinitialiser"
+msgstr "Reset"
+
+#: watch/templates/watch/advisory_list.html:29
+#: watch/templates/watch/includes/strip.html:9
+#, python-format
+msgid "%(total)s avis"
+msgid_plural "%(total)s avis"
+msgstr[0] "%(total)s advisory"
+msgstr[1] "%(total)s advisories"
+
+#: watch/templates/watch/advisory_list.html:35
+msgid "Aucun avis ne correspond à ces filtres"
+msgstr "No advisory matches these filters"
+
+#: watch/templates/watch/advisory_list.html:36
+msgid ""
+"Élargissez la recherche à toutes les technologies ou à toutes les sévérités."
+msgstr "Widen the search to all technologies or all severities."
+
+#: watch/templates/watch/advisory_list.html:41
+msgid "Pagination"
+msgstr "Pagination"
+
+#: watch/templates/watch/advisory_list.html:42
+msgid "Précédent"
+msgstr "Previous"
+
+#: watch/templates/watch/advisory_list.html:43
+#, python-format
+msgid "Page %(number)s sur %(total)s"
+msgstr "Page %(number)s of %(total)s"
+
+#: watch/templates/watch/advisory_list.html:44
+msgid "Suivant"
+msgstr "Next"
+
+#: watch/templates/watch/cms_components/hero.html:2
+msgid "Bandeau Observatoire"
+msgstr "Observatory banner"
+
+#: watch/templates/watch/cms_components/hero.html:3
+msgid "Titre"
+msgstr "Title"
+
+#: watch/templates/watch/cms_components/hero.html:4
+msgid "Sous-titre"
+msgstr "Subtitle"
+
+#: watch/templates/watch/dashboard.html:6
+msgid ""
+"Les dernières versions et failles de sécurité des CMS suivis, mises à jour "
+"plusieurs fois par jour."
+msgstr ""
+"The latest releases and security vulnerabilities of the tracked CMSs, "
+"updated several times a day."
+
+#: watch/templates/watch/dashboard.html:12
+msgid "Où en est chaque CMS"
+msgstr "Where each CMS stands"
+
+#: watch/templates/watch/dashboard.html:13
+msgid "Dernière version stable et avis de sécurité des 12 derniers mois"
+msgstr "Latest stable release and security advisories from the last 12 months"
+
+#: watch/templates/watch/dashboard.html:26
+#, python-format
+msgid "publiée le %(date)s"
+msgstr "published on %(date)s"
+
+#: watch/templates/watch/dashboard.html:28
+#: watch/templates/watch/technology_detail.html:14
+msgid "pas encore collectée"
+msgstr "not collected yet"
+
+#: watch/templates/watch/dashboard.html:40
+msgid "non évaluée"
+msgstr "not rated"
+
+#: watch/templates/watch/dashboard.html:41
+#: watch/templates/watch/includes/strip.html:4
+msgid "aucun avis"
+msgstr "no advisories"
+
+#: watch/templates/watch/dashboard.html:45
+msgid "Aucune technologie suivie"
+msgstr "No tracked technology"
+
+#: watch/templates/watch/dashboard.html:46
+msgid ""
+"Ajoutez une technologie depuis le menu « Observatoire » de la barre "
+"d'outils."
+msgstr "Add a technology from the “Observatory” menu in the toolbar."
+
+#: watch/templates/watch/dashboard.html:57
+msgid "CMS"
+msgstr "CMS"
+
+#: watch/templates/watch/dashboard.html:57
+msgid "Version"
+msgstr "Version"
+
+#: watch/templates/watch/dashboard.html:57
+msgid "Date"
+msgstr "Date"
+
+#: watch/templates/watch/dashboard.html:62
+#: watch/templates/watch/plugins/latest_releases.html:6
+msgid "sécurité"
+msgstr "security"
+
+#: watch/templates/watch/dashboard.html:71
+msgid "Aucune release collectée"
+msgstr "No release collected"
+
+#: watch/templates/watch/dashboard.html:72
+msgid ""
+"Lancez la collecte depuis le menu « Observatoire » de la barre d'outils, ou "
+"avec la commande collect_watch."
+msgstr ""
+"Run the collection from the “Observatory” menu in the toolbar, or with the "
+"collect_watch command."
+
+#: watch/templates/watch/dashboard.html:79
+msgid "Voir tous les avis"
+msgstr "See all advisories"
+
+#: watch/templates/watch/dashboard.html:85
+msgid "S'abonner au flux RSS"
+msgstr "Subscribe to the RSS feed"
+
+#: watch/templates/watch/dashboard.html:87
+msgid "Aucun avis de sécurité"
+msgstr "No security advisories"
+
+#: watch/templates/watch/dashboard.html:87
+msgid "Les avis apparaîtront ici après la prochaine collecte."
+msgstr "Advisories will appear here after the next collection."
+
+#: watch/templates/watch/includes/advisory.html:9
+msgid "corrigé en"
+msgstr "fixed in"
+
+#: watch/templates/watch/includes/strip.html:2
+#, python-format
+msgid "%(total)s avis de sécurité sur 12 mois"
+msgid_plural "%(total)s avis de sécurité sur 12 mois"
+msgstr[0] "%(total)s security advisory in 12 months"
+msgstr[1] "%(total)s security advisories in 12 months"
+
+#: watch/templates/watch/includes/strip.html:4
+#, python-format
+msgid "%(total)s avis, gravité max. %(severity)s"
+msgid_plural "%(total)s avis, gravité max. %(severity)s"
+msgstr[0] "%(total)s advisory, max. severity %(severity)s"
+msgstr[1] "%(total)s advisories, max. severity %(severity)s"
+
+#: watch/templates/watch/menu/menu.html:11
+#, python-format
+msgid "%(total)s avis de sécurité ces 30 derniers jours"
+msgid_plural "%(total)s avis de sécurité ces 30 derniers jours"
+msgstr[0] "%(total)s security advisory in the last 30 days"
+msgstr[1] "%(total)s security advisories in the last 30 days"
+
+#: watch/templates/watch/plugins/comparison_item.html:5
+#, python-format
+msgid "Note : %(score)s sur 5"
+msgstr "Score: %(score)s out of 5"
+
+#: watch/templates/watch/plugins/comparison_item.html:7
+#: watch/templates/watch/plugins/technology_facts.html:2
+msgid "Dernière version"
+msgstr "Latest release"
+
+#: watch/templates/watch/plugins/comparison_item.html:9
+msgid "Points forts"
+msgstr "Strengths"
+
+#: watch/templates/watch/plugins/comparison_item.html:10
+msgid "Points faibles"
+msgstr "Weaknesses"
+
+#: watch/templates/watch/plugins/latest_releases.html:12
+msgid "Aucune release pour le moment."
+msgstr "No releases yet."
+
+#: watch/templates/watch/plugins/technology_facts.html:3
+msgid "Publiée le"
+msgstr "Published on"
+
+#: watch/templates/watch/plugins/technology_facts.html:4
+msgid "Avis de sécurité (12 mois)"
+msgstr "Security advisories (12 months)"
+
+#: watch/templates/watch/technology_detail.html:9
+msgid "Site officiel"
+msgstr "Official website"
+
+#: watch/templates/watch/technology_detail.html:13
+#, python-format
+msgid "dernière version, publiée le %(date)s"
+msgstr "latest release, published on %(date)s"
+
+#: watch/templates/watch/technology_detail.html:22
+msgid "Notre avis"
+msgstr "Our verdict"
+
+#: watch/templates/watch/technology_detail.html:32
+msgid "Aucune release collectée pour le moment."
+msgstr "No release collected yet."
+
+#: watch/templates/watch/technology_detail.html:39
+msgid "Tous les avis"
+msgstr "All advisories"
+
+#: watch/templates/watch/technology_detail.html:41
+msgid "Aucun avis connu."
+msgstr "No known advisories."
+
+#: watch/templates/watch/technology_detail.html:46
+msgid "À lire aussi"
+msgstr "Further reading"
